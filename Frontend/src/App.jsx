@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/Navbar"
+import Footer from "./components/Footer"
 import Home from "./pages/Home";
 import DetectionCenter from "./pages/DetectionCenter";
 import Features from "./pages/Features";
@@ -15,6 +16,7 @@ function App() {
         <Route path="/features" element={<Features />} />
         <Route path="/signinfo" element={<SignInfo />} />
       </Routes>
+      <Footer />
     </>
   );
 }

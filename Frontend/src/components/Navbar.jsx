@@ -7,8 +7,8 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="bg-white">
-      <header className="absolute inset-x-0 top-0 z-50">
+    <div className="fixed top-0 left-0 right-0 shadow z-50">
+      <header className="absolute inset-x-0 top-0 bg-white">
         <nav
           className="flex items-center justify-between p-2 lg:px-8 text-black shadow  "
           aria-label="Global"
@@ -24,9 +24,8 @@ export default function NavBar() {
             <button
               type="button"
               onClick={() => setMenuOpen((index) => !index)}
-              className="-m-1 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              className="-m-1 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 bg-white shadow "
             >
-              <span className="sr-only">Open main</span>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
