@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink , Link } from "react-router-dom";
 import leftArrow from "../assets/arrow-right.svg";
 import check from "../assets/check.svg";
 import trafficSign from "../assets/trafficSign.png";
@@ -33,20 +33,20 @@ function Home() {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <NavLink
+              <Link
                 to="/detectionCenter"
                 className="flex items-center gap-2 rounded-md bg-amber-300 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-amber-400"
               >
                 <div className="text-black">Launch Detection Center</div>
                 <img src={leftArrow} alt="arrow" className="w-5 h-5" />
-              </NavLink>
+              </Link>
 
-              <NavLink
-                to="features"
+              <Link
+                to="/features"
                 className="flex items-center gap-2 rounded-md border border-black px-4 py-2 text-sm font-semibold justify-center hover:bg-amber-100"
               >
                 <div className="text-black">Explore Feature</div>
-              </NavLink>
+              </Link>
             </div>
           </div>
         </div>
@@ -130,12 +130,12 @@ function Home() {
             <img src={check} alt="check" />
             Project management and dataset version control
           </p>
-          <NavLink
+          <Link
             to="/detectionCenter"
             className="inline-flex items-center gap-2 rounded-md bg-amber-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-amber-400 w-fit"
           >
             <div className="text-black">Try Detection Center Now</div>
-          </NavLink>
+          </Link>
         </div>
 
         <div className="flex justify-center h-full">
@@ -153,13 +153,13 @@ function Home() {
         <div className="text-black">
           Start detecting and analyzing traffic signs with professional accuracy today.
         </div>
-        <NavLink
+        <Link
           to="/detectionCenter"
           className="flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-semibold text-black shadow hover:bg-gray-100 w-fit"
         >
           <div className="text-black">Launch Detection Center</div>
           <img src={leftArrow} alt="arrow" className="w-5 h-5" />
-        </NavLink>
+        </Link>
       </div>
       <div className="bg-neutral-100 p-3"></div>
     </div>
