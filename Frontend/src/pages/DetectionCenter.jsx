@@ -2,8 +2,8 @@ import { useState } from "react";
 import ImageUpload from "../components/ImageUpload";
 import VideoUpload from "../components/VideoUpload";
 import WebcameCapture from "../components/WebcameCapture";
-import upload from "../assets/upload.svg";
-import webcam from "../assets/webcam.svg";
+import upload from "../assets/DetectionCenter/upload.svg";
+import webcam from "../assets/DetectionCenter/webcam.svg";
 import "../App.css";
 
 function DetectionCenter() {

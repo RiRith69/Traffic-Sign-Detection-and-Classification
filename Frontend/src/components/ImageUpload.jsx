@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import upload from "../assets/upload.svg";
+import upload from "../assets/DetectionCenter/upload.svg";
 function ImageUpload() {
   const fileInput = useRef(null);
   const [image, setImage] = useState(null);

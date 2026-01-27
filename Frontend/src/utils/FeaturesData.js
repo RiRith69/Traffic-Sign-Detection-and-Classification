@@ -1,12 +1,20 @@
-import imageDetection from "../assets/imageDetection.svg";
-import videoDetection from "../assets/videoDetection.svg";
-import WebcameCapture from "../assets/WebcamDetection.svg";
-import yoloModel from "../assets/yoloModel.svg";
-import accuracy from "../assets/accuracy.svg";
-import dataValidation from "../assets/dataValidation.svg";
-import dataExport from "../assets/dataExport.svg";
-import multiFormatSupport from "../assets/multi-FormatSupport.svg";
-import signsInformation from "../assets/signsInformation.svg";
+import imageDetection from "../assets/Features/imageDetection.svg";
+import videoDetection from "../assets/Features/videoDetection.svg";
+import WebcameCapture from "../assets/Features/WebcamDetection.svg";
+import yoloModel from "../assets/Features/yoloModel.svg";
+import accuracy from "../assets/Features/accuracy.svg";
+import dataValidation from "../assets/Features/dataValidation.svg";
+import dataExport from "../assets/Features/dataExport.svg";
+import multiFormatSupport from "../assets/Features/multi-FormatSupport.svg";
+import signsInformation from "../assets/Features/signsInformation.svg";
+
+const technicalSpecifications = [
+  {id: 1, label: "Detection Model", value: "YOLOv8" },
+  {id: 2, label: "Supported Signs", value: "33+" },
+  {id: 3, label: "Accuracy Rate", value: "95%+" },
+  {id: 4, label: "Input Formats", value: "Images, Video, Streams" },
+  {id: 5, label: "Output Formats", value: "JSON, CSV" },
+];
 
 const featuresData = [
   {
@@ -101,4 +109,4 @@ const featuresData = [
   },
 ];
 
-export default featuresData;
+export {featuresData , technicalSpecifications};

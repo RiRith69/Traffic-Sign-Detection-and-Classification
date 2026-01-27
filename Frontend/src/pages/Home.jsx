@@ -1,7 +1,7 @@
 import { NavLink , Link } from "react-router-dom";
-import leftArrow from "../assets/arrow-right.svg";
-import check from "../assets/check.svg";
-import trafficSign from "../assets/trafficSign.png";
+import leftArrow from "../assets/Home/arrow-right.svg";
+import check from "../assets/Home/check.svg";
+import trafficSign from "../assets/Home/trafficSign.png";
 import {
   informationdata,
   coreCapabilities,

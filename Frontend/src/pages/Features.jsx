@@ -1,5 +1,5 @@
 import "../App.css";
-import featuresData from "../utils/FeaturesData.js";
+import {featuresData , technicalSpecifications} from "../utils/FeaturesData.js";
 
 function Features() {
   return (
@@ -20,21 +20,15 @@ function Features() {
         </h2>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {[
-            { label: "Detection Model", value: "YOLOv8" },
-            { label: "Supported Signs", value: "33+" },
-            { label: "Accuracy Rate", value: "95%+" },
-            { label: "Input Formats", value: "Images, Video, Streams" },
-            { label: "Output Formats", value: "JSON, CSV" },
-          ].map((item, i) => (
+          {technicalSpecifications.map((item) => (
             <div
-              key={i}
+              key={item.id}
               className="bg-white rounded-xl shadow-sm py-6 px-4 text-center"
             >
-              <p className="text-sm text-gray-500">{item.label}</p>
-              <p className="mt-2 font-semibold text-2xl text-yellow-500">
+              <div className="text-sm text-gray-500">{item.label}</div>
+              <div className="mt-2 font-semibold text-2xl text-yellow-500">
                 {item.value}
-              </p>
+              </div>
             </div>
           ))}
         </div>

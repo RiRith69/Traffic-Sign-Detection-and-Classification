@@ -1,9 +1,9 @@
 import "../App.css";
 import { Link } from "react-router-dom";
-import logoFooter from "../assets/logo-footer.png";
-import discord from "../assets/discord.svg";
-import facebook from "../assets/facebook.svg";
-import telegram from "../assets/telegram.svg";
+import logoFooter from "../assets/Footer/logo-footer.png";
+import discord from "../assets/Footer/discord.svg";
+import facebook from "../assets/Footer/facebook.svg";
+import telegram from "../assets/Footer/telegram.svg";
 
 function Footer() {
   return (

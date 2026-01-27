@@ -1,4 +1,4 @@
-import video from "../assets/video.svg";
+import video from "../assets/DetectionCenter/video.svg";
 
 function VideoUpload() {
   return (

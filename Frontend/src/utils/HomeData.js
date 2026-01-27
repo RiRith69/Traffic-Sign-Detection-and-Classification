@@ -1,7 +1,7 @@
-import data from "../assets/data.svg";
-import img from "../assets/img.svg";
-import lighting from "../assets/lighting.svg";
-import security from "../assets/security.svg";
+import data from "../assets/Home/data.svg";
+import img from "../assets/Home/img.svg";
+import lighting from "../assets/Home/lighting.svg";
+import security from "../assets/Home/security.svg";
 
 export const informationdata = [
   {
