@@ -153,7 +153,7 @@ export default function SignInfo() {
       </div>
 
       {/* Signs Grid */}
-      <div className="w-full mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 pt-6 px-5 pb-10">
+      <div className="w-full mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 pt-6 px-5 pb-10 pr-10">
         {filteredSigns.length > 0 ? (
           filteredSigns.map((item) => (
             <div
