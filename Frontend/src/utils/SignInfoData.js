@@ -24,6 +24,18 @@ export const signInforData = [
     description:
       "The sign is used to warn users of a general danger. It does not specify the exact hazard; instead, it indicates that you should be alert and cautious because something potentially dangerous is nearby",
   },
+  {
+    id: 3,
+    img: WarningSign,
+    type: {
+      name: "Warning",
+      extraDescription:
+        "Always be alert and proceed with caution in this area.",
+    },
+    name: "Warning",
+    description:
+      "The sign is used to warn users of a general danger. It does not specify the exact hazard; instead, it indicates that you should be alert and cautious because something potentially dangerous is nearby",
+  },
   //   just input and copy for this
 ];
 
