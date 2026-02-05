@@ -1,12 +1,16 @@
 import searchIcon from "../assets/SignInformation/search.svg";
 import Filtering from "../assets/SignInformation/filter.svg";
 import { signInforData, TotalSign } from "../utils/SignInfoData";
+import Warning_Signs from "../assets/SignInformation/Warning_Signs.svg";
+import Regulatory_Signs from "../assets/SignInformation/Regulatory_Signs.svg";
+import Informational_Signs from "../assets/SignInformation/Informational_Signs.svg";
+import Mandatory_Signs from "../assets/SignInformation/Mandatory_Signs.svg";
 import { useState } from "react";
 import "../App.css";
 
 export default function SignInfo() {
   const [search, setSearch] = useState("");
-  const [filterType, setFilterType] = useState(""); // Selected type filter
+  const [filterType, setFilterType] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
 
   // Filtered signs based on search + filter
@@ -16,14 +20,19 @@ export default function SignInfo() {
     const desc = item.description ? item.description.toLowerCase() : "";
     const matchesSearch =
       name.includes(searchText) || desc.includes(searchText);
-    const matchesFilter = filterType ? item.type === filterType : true;
+    const matchesFilter = filterType ? item.type.name === filterType : true;
     return matchesSearch && matchesFilter;
   });
 
   // Get unique types for filter buttons
   const uniqueTypes = Array.from(
-    new Set(signInforData.map((item) => item.type.name)),
+    new Set(signInforData.map((item) => item.type.name))
   );
+
+  // Helper function to get real-time count per category
+  const getCount = (typeName) => {
+    return signInforData.filter((item) => item.type.name === typeName).length;
+  };
 
   return (
     <div className="text-black w-screen pt-20 bg-zinc-50 min-h-screen">
@@ -53,14 +62,12 @@ export default function SignInfo() {
           onFocus={() => search && setShowDropdown(true)}
           className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        {/* Search Icon */}
         <img
           src={searchIcon}
           alt="search"
           className="absolute left-8 top-1/2 -translate-y-1/2 h-4 w-4 opacity-60"
         />
 
-        {/* Dropdown Suggestions */}
         {showDropdown && search && (
           <div className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto">
             {filteredSigns.length > 0 ? (
@@ -83,7 +90,7 @@ export default function SignInfo() {
                     <p className="text-xs text-gray-500 line-clamp-2">
                       {item.description}
                     </p>
-                    <p className="text-xs text-blue-500">{item.type}</p>
+                    <p className="text-xs text-blue-500">{item.type.name}</p>
                   </div>
                 </div>
               ))
@@ -98,18 +105,16 @@ export default function SignInfo() {
 
       {/* Filter Buttons */}
       <div className="px-5 flex gap-1.5 flex-wrap mt-4">
-        {/* "All" button */}
         <div
           className={`flex flex-row bg-white rounded py-2 px-2 justify-center items-center gap-0.5 cursor-pointer ${
             filterType === "" ? "bg-blue-100" : ""
           }`}
-          onClick={() => setFilterType("")} // Clear filter
+          onClick={() => setFilterType("")}
         >
           <img src={Filtering} alt="Filtering" className="w-3 h-3" />
           <div>All</div>
         </div>
 
-        {/* Unique type buttons */}
         {uniqueTypes.map((type, index) => (
           <div
             key={index}
@@ -119,7 +124,7 @@ export default function SignInfo() {
             onClick={() => setFilterType(type)}
           >
             <img src={Filtering} alt="Filtering" className="w-3 h-3" />
-            <div>{type.name}</div>
+            <div>{type}</div>
           </div>
         ))}
       </div>
@@ -133,15 +138,22 @@ export default function SignInfo() {
           >
             <div className="text-sm text-gray-500">{item.label}</div>
             <div className="mt-2 font-semibold text-2xl text-yellow-500">
-              {item.value}
+              {item.id === 1 ? signInforData.length : item.value}
             </div>
           </div>
         ))}
       </div>
-      {/* showing sign of sign */}
+
+      {/* Results Count Label */}
+      <div className="px-5 mt-10">
+        <p className="text-xl font-medium text-gray-900">
+          Showing <span className="font-bold">{filteredSigns.length}</span> of{" "}
+          <span className="font-bold">{signInforData.length}</span> signs
+        </p>
+      </div>
 
       {/* Signs Grid */}
-      <div className="w-full mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 pt-10 px-5 pb-10">
+      <div className="w-full mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 pt-6 px-5 pb-10">
         {filteredSigns.length > 0 ? (
           filteredSigns.map((item) => (
             <div
@@ -161,8 +173,95 @@ export default function SignInfo() {
             </div>
           ))
         ) : (
-          <p className="text-gray-500 col-span-full">No signs found.</p>
+          <p className="text-gray-500 col-span-full text-center">
+            No signs found.
+          </p>
         )}
+      </div>
+
+      {/* How to Identify - DYNAMIC VERSION */}
+      <div className="w-full bg-gray-100 pt-20 pb-20 px-5 border-t border-gray-200">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-gray-900">How to Identify</h1>
+          <p className="text-black mt-2 max-w-2xl mx-auto text-sm">
+            Understanding traffic sign categories and what information is
+            available for each
+          </p>
+        </div>
+
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10 text-left justify-center ">
+          {/* Warning Signs */}
+          <div className="flex gap-4 p-4 items-start bg-white rounded-2xl">
+            <div className="bg-orange-50 p-4 rounded-lg flex items-center justify-center">
+              <div className="text-2xl text-orange-400">
+                <img src={Warning_Signs} alt="" className="w-fit h-auto" />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="text-xl font-bold">Warning Signs</h3>
+              <p className="text-gray-400 text-sm mt-1">
+                Alert drivers to potential hazards. Typically yellow diamond-shaped with black symbols.
+              </p>
+              <p className="text-gray-500 text-xs mt-3 font-medium">
+                Sign Count: {getCount("Warning")}
+              </p>
+            </div>
+          </div>
+          
+          {/* Regulatory Signs */}
+          <div className="flex gap-4 p-4 items-start bg-white rounded-2xl">
+            <div className="bg-red-100 p-4 rounded-lg flex items-center justify-center">
+              <div className="text-2xl text-red-500">
+                <img src={Regulatory_Signs} alt="" className="w-fit h-auto" />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="text-xl font-bold">Warning Signs</h3>
+              <p className="text-gray-400 text-sm mt-1">
+                Alert drivers to potential hazards. Typically yellow diamond-shaped with black symbols.
+              </p>
+              <p className="text-gray-500 text-xs mt-3 font-medium">
+                Sign Count: {getCount("Regulatory")}
+              </p>
+            </div>
+          </div>
+
+          {/* Informational Signs */}
+          <div className="flex gap-4 p-4 items-start bg-white rounded-2xl">
+            <div className="bg-blue-50 p-4 rounded-lg flex items-center justify-center">
+              <div className="text-2xl text-blue-400">
+                 <img src={Informational_Signs} alt="" className="" />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="text-xl font-bold">Informational Signs</h3>
+              <p className="text-gray-400 text-sm mt-1">
+                Provide guidance or information about roads and distances. Usually blue or green.
+              </p>
+              <p className="text-gray-500 text-xs mt-3 font-medium">
+                Sign Count: {getCount("Informational")}
+              </p>
+            </div>
+          </div>
+
+          {/* Mandatory Signs */}
+          <div className="flex gap-4 p-4 items-start bg-white rounded-2xl">
+            <div className="bg-blue-50 p-4 rounded-lg flex items-center justify-center">
+              <div className="text-2xl text-blue-400">
+                 <img src={Mandatory_Signs} alt="" className="" />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="text-xl font-bold">Informational Signs</h3>
+              <p className="text-gray-400 text-sm mt-1">
+                Provide guidance or information about roads and distances. Usually blue or green.
+              </p>
+              <p className="text-gray-500 text-xs mt-3 font-medium">
+                Sign Count: {getCount("Mandatory")}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
