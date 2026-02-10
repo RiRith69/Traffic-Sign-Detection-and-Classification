@@ -12,10 +12,10 @@ function DetectionCenter() {
   return (
     <div className="pt-30 text-black w-screen bg-neutral-100 pb-5 sm:pb-10 ">
       <div className="px-4 sm:px-10 lg:px-20 text-left">
-        <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">
+        <div className="text-3xl sm:text-4xl lg:text-7xl font-bold mb-4">
           Detection Center
         </div>
-        <div className="text-sm sm:text-base lg:text-lg mb-6">
+        <div className="text-sm sm:text-base lg:text-lg mb-6 text-black/60">
           Select a detection mode to analyze traffic signs with YOLO-powered
           precision
         </div>

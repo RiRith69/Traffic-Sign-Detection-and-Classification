@@ -6,8 +6,8 @@ function Features() {
     <div className="pt-32 text-center text-black w-screen bg-zinc-50">
       {/* ===== Header ===== */}
       <div className="w-full h-full text-center px-4 py-16 bg-zinc-50">
-        <div className="text-5xl font-bold text-gray-900">System Features</div>
-        <p className="mt-3 text-gray-500">
+        <div className="text-7xl font-bold text-gray-900">System Features</div>
+        <p className="mt-6 text-gray-500">
           Comprehensive traffic sign detection capabilities powered by advanced
           YOLO technology and intelligent data management systems.
         </p>
