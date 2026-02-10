@@ -38,10 +38,10 @@ export default function SignInfo() {
     <div className="text-black w-screen pt-20 bg-zinc-50 min-h-screen">
       {/* Header */}
       <div className="w-full px-4 py-10 text-center">
-        <h1 className="text-5xl font-bold text-gray-900">
+        <div className="text-7xl font-bold text-gray-900">
           Explore Information <br /> About Signs
-        </h1>
-        <p className="text-gray-500 mt-2 max-w-2xl mx-auto">
+        </div>
+        <p className="text-gray-500 mt-6 max-w-2xl mx-auto">
           Comprehensive reference catalog of traffic signs in our system, with
           detailed meanings, regulations, and classification information.
         </p>

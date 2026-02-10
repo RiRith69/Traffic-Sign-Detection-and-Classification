@@ -21,9 +21,9 @@ function Home() {
 
           {/* Main content */}
           <div className="text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            <div className="text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl">
               Khmer Traffic Sign <br></br> Detection System
-            </h1>
+            </div>
 
             <p className="mt-6 text-base text-black/60 sm:text-lg">
               This system uses YOLO-based deep learning to detect and classify
