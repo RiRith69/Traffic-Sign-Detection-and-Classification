@@ -16,7 +16,7 @@ export default function NavBar() {
           {/* Logo */}
           <div className="flex lg:flex-1">
             <span className="sr-only">Logo</span>
-            <img src={Logo} alt="Logo" className="h-15 w-auto" />
+            <img src={Logo} alt="Logo" className="h-20 w-auto" />
           </div>
 
           {/* Mobile menu button */}
