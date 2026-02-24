@@ -44,301 +44,301 @@ export const signInforData =[
   {
     id: 0,
     img: img0,
-    type: { name: "Information", extraDescription: "Pedestrian crossing ahead" },
-    name: "Pedestrian Crossing",
-    description: "Pedestrian crossing ahead. Drivers must slow down and yield to pedestrians."
+    type: { name: "Guide", extraDescription: "PEDESTRIAN CROSSING AREA" },
+    name: "Pedestrian Crossing Area",
+    description: "This sign is used to inform road users about pedestrian crossing locations."
   },
   {
     id: 1,
     img: img1,
-    type: { name: "Prohibitory", extraDescription: "No left turn" },
-    name: "No Left Turn",
-    description: "Left turns are prohibited at this location."
+    type: { name: "Prohibitory", extraDescription: "NO TURN LEFT" },
+    name: "No Turn Left",
+    description: "This sign prohibits all types of vehicles from turning left."
   },
   {
     id: 2,
     img: img2,
-    type: { name: "Prohibitory", extraDescription: "No right turn" },
-    name: "No Right Turn",
-    description: "Right turns are prohibited at this location."
+    type: { name: "Prohibitory", extraDescription: "NO TURN RIGHT" },
+    name: "No Turn Right",
+    description: "This sign prohibits all types of vehicles from turning right."
   },
   {
     id: 3,
     img: img3,
-    type: { name: "Prohibitory", extraDescription: "No U-turn" },
+    type: { name: "Prohibitory", extraDescription: "NO U TURN" },
     name: "No U-turn",
-    description: "U-turns (180-degree turns) are not allowed."
+    description: "This sign prohibits all types of vehicles from making a U-turn."
   },
   {
     id: 4,
     img: img4,
-    type: { name: "Prohibitory", extraDescription: "No entry" },
+    type: { name: "Prohibitory", extraDescription: "NO ENTRY" },
     name: "No Entry",
-    description: "Entry is prohibited for all vehicles in this direction."
+    description: "This sign prohibits entry for all types of vehicles."
   },
   {
     id: 5,
     img: img5,
-    type: { name: "Regulatory", extraDescription: "Speed limit" },
+    type: { name: "Prohibitory", extraDescription: "Speed limit" },
     name: "Speed Limit 20 km/h",
     description: "Maximum speed allowed is 20 km/h. Often used in school zones or narrow roads."
   },
   {
     id: 6,
     img: img6,
-    type: { name: "Prohibitory", extraDescription: "Parking restriction" },
-    name: "No Parking (even/odd days)",
-    description: "Parking is prohibited on even or odd dates (alternating restriction)."
+    type: { name: "Prohibitory", extraDescription: "NO PARKING ON EVEN DAYS" },
+    name: "No Parking On Even Days",
+    description: "This sign prohibits parking for all types of vehicles on even-numbered days of each month. However, drivers may stop to pick up/drop off passengers or load/unload goods for the necessary duration. The transition from even days to odd days occurs between 21:00 and 21:30."
   },
   {
     id: 7,
     img: img7,
-    type: { name: "Prohibitory", extraDescription: "No parking" },
+    type: { name: "Prohibitory", extraDescription: "NO PARKING" },
     name: "No Parking",
-    description: "Parking is completely prohibited in this area."
+    description: "This sign prohibits parking for all types of vehicles. However, drivers may stop to pick up/drop off passengers or load/unload goods for the necessary duration."
   },
   {
     id: 8,
     img: img8,
-    type: { name: "Prohibitory", extraDescription: "No stopping" },
+    type: { name: "Prohibitory", extraDescription: "NO STOPPING" },
     name: "No Stopping",
-    description: "Stopping (even briefly) is prohibited."
+    description: "This sign prohibits stopping for all types of vehicles."
   },
   {
     id: 9,
     img: img9,
-    type: { name: "Prohibitory", extraDescription: "No overtaking" },
+    type: { name: "Prohibitory", extraDescription: "NO OVERTAKING" },
     name: "No Overtaking",
-    description: "Overtaking other vehicles is prohibited."
+    description: "This sign prohibits all types of motor vehicles from overtaking, except for motorcycles."
   },
   {
     id: 10,
     img: img10,
-    type: { name: "Regulatory", extraDescription: "Speed limit" },
+    type: { name: "Prohibitory", extraDescription: "Speed limit" },
     name: "Speed Limit 40 km/h",
     description: "Maximum speed allowed is 40 km/h. Drivers must not exceed this speed."
   },
   {
     id: 11,
     img: img11,
-    type: { name: "Regulatory", extraDescription: "Speed limit" },
+    type: { name: "Prohibitory", extraDescription: "Speed limit" },
     name: "Speed Limit 90 km/h",
     description: "Maximum speed allowed is 90 km/h."
   },
   {
     id: 12,
     img: img12,
-    type: { name: "Mandatory", extraDescription: "Keep right" },
+    type: { name: "Mandatory", extraDescription: "KEEP RIGHT" },
     name: "Keep Right",
-    description: "Vehicles must pass to the right of the sign or obstacle."
+    description: "This sign requires all types of vehicles to turn or pass to the right."
   },
   {
     id: 13,
     img: img13,
-    type: { name: "Regulatory", extraDescription: "Speed limit" },
+    type: { name: "Prohibitory", extraDescription: "Speed limit" },
     name: "Speed Limit 60 km/h",
     description: "Maximum speed allowed is 60 km/h."
   },
   {
     id: 14,
     img: img14,
-    type: { name: "Prohibitory", extraDescription: "No parking" },
-    name: "No Parking (time-restricted)",
-    description: "Parking prohibited during certain hours or days."
+    type: { name: "Prohibitory", extraDescription: "NO PARKING ON ODD DAYS" },
+    name: "No Parking On Odd Days",
+    description: "This sign prohibits parking for all types of vehicles on odd-numbered days of each month. However, drivers may stop to pick up/drop off passengers or load/unload goods for the necessary duration. The transition from odd days to even days occurs between 21:00 and 21:30."
   },
   {
     id: 15,
     img: img15,
-    type: { name: "Mandatory", extraDescription: "Mandatory right turn" },
-    name: "Mandatory Right Turn",
-    description: "Vehicles must turn right at this point."
+    type: { name: "Mandatory", extraDescription: "TURN RIGHT AHEAD" },
+    name: "Turn Right Ahead",
+    description: "This sign requires all types of vehicles to turn right at the upcoming intersection, behind the sign."
   },
   {
     id: 16,
     img: img16,
-    type: { name: "Warning", extraDescription: "Sharp curve" },
-    name: "Sharp Curve Left",
-    description: "Sharp curve to the left ahead. Reduce speed and stay in lane."
+    type: { name: "Warning", extraDescription: "LEFT BEND" },
+    name: "Left Bend",
+    description: "This sign is used to warn drivers to be careful, as there is a curve to the left ahead."
   },
   {
     id: 17,
     img: img17,
-    type: { name: "Warning", extraDescription: "Speed hump" },
-    name: "Speed Hump",
-    description: "Speed hump or bump ahead. Slow down to avoid discomfort or loss of control."
+    type: { name: "Warning", extraDescription: "ROAD HUMP" },
+    name: "Road Hump",
+    description: "This sign is used to warn drivers to be careful, as there is a hump in the road ahead."
   },
   {
     id: 18,
     img: img18,
-    type: { name: "Warning", extraDescription: "Railway crossing" },
-    name: "Railway Crossing",
-    description: "Level crossing ahead. Watch for trains and be prepared to stop."
+    type: { name: "Warning", extraDescription: "RAILWAY CROSSING WITHOUT GATES" },
+    name: "Railway Crossing Without Gates",
+    description: "This sign is used to warn drivers to be careful, as there is a railway crossing ahead without protective barriers."
   },
   {
     id: 19,
     img: img19,
-    type: { name: "Mandatory", extraDescription: "Go straight" },
-    name: "Straight Ahead Only",
-    description: "Vehicles must proceed straight ahead. No turning allowed."
+    type: { name: "Guide", extraDescription: "ONE WAY TRAFFIC" },
+    name: "One Way Traffic",
+    description: "This sign is used to inform drivers about a one-way road, where traffic is allowed to travel in only one direction as indicated by the arrow."
   },
   {
     id: 20,
     img: img20,
-    type: { name: "Prohibitory", extraDescription: "No horn" },
+    type: { name: "Prohibitory", extraDescription: "NO HORN" },
     name: "No Horn",
-    description: "Use of horn is prohibited in this area."
+    description: "This sign prohibits all types of vehicles from honking their horns, except in cases of an immediate danger or emergency."
   },
   {
     id: 21,
     img: img21,
-    type: { name: "Regulatory", extraDescription: "Advisory" },
+    type: { name: "Mandatory", extraDescription: "SLOW DOWN" },
     name: "Slow Down",
-    description: "Slow down (often used in hazardous or construction areas)."
+    description: "This sign requires drivers of all types of vehicles to reduce their speed."
   },
   {
     id: 22,
     img: img22,
-    type: { name: "Regulatory", extraDescription: "Stop" },
+    type: { name: "Stop And Give Way", extraDescription: "Stop" },
     name: "Stop",
-    description: "Come to a complete stop. Proceed only when safe."
+    description: "This sign marks a road that has lost the right-of-way. The driver must stop even if there are no other vehicles crossing ahead. The driver can only continue forward if the road to be crossed is clear."
   },
   {
     id: 23,
     img: img23,
-    type: { name: "Warning", extraDescription: "Roundabout ahead" },
-    name: "Roundabout Ahead",
-    description: "Roundabout ahead. Yield to traffic already in the circle."
+    type: { name: "Give Way", extraDescription: "GIVE WAY (at Roundabout)" },
+    name: "Give Way (at Roundabout)",
+    description: "This sign marks a road that has lost the right-of-way. The driver must reduce speed or stop in order to give priority to vehicles already inside the roundabout."
   },
   {
     id: 24,
     img: img24,
-    type: { name: "Warning", extraDescription: "T-junction" },
-    name: "T-Junction",
-    description: "T-junction ahead. Be prepared to stop or yield."
+    type: { name: "Warning", extraDescription: "PRIORITY ROAD (PRIORITY AT THE FIRST JUNCTION)" },
+    name: "Priority Road (Priority At The First Junction)",
+    description: "This sign marks a priority road (main road) that has a minor road (small road) crossing ahead."
   },
   {
     id: 25,
     img: img25,
-    type: { name: "Regulatory", extraDescription: "Give way" },
-    name: "Give Way",
-    description: "Yield to traffic on the intersecting road. Stop if necessary."
+    type: { name: "Give Way", extraDescription: "GIVE WAY (at Intersection)" },
+    name: "Give Way (at Intersection)",
+    description: "This sign marks a road that has lost the right-of-way. The driver must reduce speed; if the road is clear, they may cross. If the road is not clear, the driver must stop and wait until the road is clear before they can continue their journey."
   },
   {
     id: 26,
     img: img26,
-    type: { name: "Warning", extraDescription: "Side road on the right" },
-    name: "Side Road Right",
-    description: "A side road joins from the right ahead. Watch for merging traffic."
+    type: { name: "Warning", extraDescription: "ROAD JUNCTION ON THE LEFT" },
+    name: "Road Junction On The Left",
+    description: "This sign is used to warn drivers to be careful, as there is a T-junction (side road) to the left ahead."
   },
   {
     id: 27,
     img: img27,
-    type: { name: "Warning", extraDescription: "Side road on the left" },
-    name: "Side Road Left",
-    description: "A side road joins from the left ahead. Watch for merging traffic."
+    type: { name: "Warning", extraDescription: "ROAD JUNCTION ON THE RIGHT" },
+    name: "Road Junction On The Right",
+    description: "This sign is used to warn drivers to be careful, as there is a T-junction (side road) to the right ahead."
   },
   {
     id: 28,
     img: img28,
-    type: { name: "Warning", extraDescription: "Side road junction on the left" },
-    name: "Side Road Left",
-    description: "A side road or junction approaches from the left ahead. Be prepared for vehicles merging from the left."
+    type: { name: "Warning", extraDescription: "STAGGERED JUNCTION, RIGHT TURN FIRST" },
+    name: "Staggered Junction, Right Turn First",
+    description: "This sign is used to warn drivers to be careful, as there is a staggered junction ahead, first to the right and then to the left."
   },
   {
     id: 29,
     img: img29,
-    type: { name: "Warning", extraDescription: "Side road junction on the right" },
-    name: "Side Road Right",
-    description: "A side road or junction approaches from the right ahead. Be prepared for vehicles merging from the right."
+    type: { name: "Warning", extraDescription: "STAGGERED JUNCTION, LEFT TURN FIRST" },
+    name: "Staggered Junction, Left Turn First",
+    description: "This sign is used to warn drivers to be careful, as there is a staggered junction ahead, first to the left and then to the right."
   },
   {
     id: 30,
     img: img30,
-    type: { name: "Warning", extraDescription: "Road narrows both sides" },
-    name: "Road Narrows (both sides)",
-    description: "The road narrows on both sides ahead. Reduce speed and adjust position carefully."
+    type: { name: "Warning", extraDescription: "CARRIAGE WAY NARROWS" },
+    name: "Carriage Way Narrows",
+    description: "This sign is used to warn drivers to be careful, as the road narrows ahead."
   },
   {
     id: 31,
     img: img31,
-    type: { name: "Warning", extraDescription: "Road narrows right" },
-    name: "Road Narrows Right",
-    description: "The road narrows on the right side ahead."
+    type: { name: "Warning", extraDescription: "CARRIAGE WAY NARROWS ON RHS" },
+    name: "Carriage Way Narrows On RHS",
+    description: "This sign is used to warn drivers to be careful, as the road narrows on the right ahead."
   },
   {
     id: 32,
     img: img32,
-    type: { name: "Warning", extraDescription: "Road narrows left" },
-    name: "Road Narrows Left",
-    description: "The road narrows on the left side ahead."
+    type: { name: "Warning", extraDescription: "CARRIAGE WAY NARROWS ON LHS" },
+    name: "Carriage Way Narrows On LHS",
+    description: "This sign is used to warn drivers to be careful, as the road narrows on the left ahead."
   },
   {
     id: 33,
     img: img33,
-    type: { name: "Warning", extraDescription: "Children crossing" },
+    type: { name: "Warning", extraDescription: "CHILDREN CROSSING" },
     name: "Children Crossing",
-    description: "School children may be crossing. Slow down and be prepared to stop."
+    description: "This sign is used to warn drivers to be careful, as there may be children crossing ahead."
   },
   {
     id: 34,
     img: img34,
-    type: { name: "Warning", extraDescription: "Pedestrian crossing" },
+    type: { name: "Warning", extraDescription: "PEDESTRIAN CROSSING" },
     name: "Pedestrian Crossing",
-    description: "Pedestrian crossing ahead. Yield to pedestrians."
+    description: "This sign is used to warn drivers to be careful, as there may be pedestrians crossing ahead."
   },
   {
     id: 35,
     img: img35,
-    type: { name: "Warning", extraDescription: "Traffic lights ahead" },
-    name: "Traffic Lights Ahead",
-    description: "Traffic light ahead. Be prepared to stop if the light is red."
+    type: { name: "Warning", extraDescription: "TRAFFIC LIGHTS" },
+    name: "Traffic Lights",
+    description: "This sign is used to warn drivers to be careful, as there are traffic lights (stoplights) ahead. This sign is used only in cases where the geography does not favor the driver being able to see the traffic lights ahead clearly."
   },
   {
     id: 36,
     img: img36,
-    type: { name: "Prohibitory", extraDescription: "No trucks" },
-    name: "No Trucks",
-    description: "Trucks or heavy goods vehicles are prohibited."
+    type: { name: "Prohibitory", extraDescription: "NO ENTRY FOR LARGED-SIZED TRUCK" },
+    name: "No Entry For Larged-Sized Truck",
+    description: "This sign prohibits entry for heavy goods vehicles (trucks) with a total weight exceeding 3.50 tons."
   },
   {
     id: 37,
     img: img37,
-    type: { name: "Warning", extraDescription: "General danger" },
-    name: "Other Danger",
-    description: "Unspecified hazard ahead. Reduce speed and stay alert."
+    type: { name: "Warning", extraDescription: "DENGERS" },
+    name: "Dengers",
+    description: "This sign is used to indicate various dangers that are not specified in other types of warning signs. Underneath this sign, a description must be written to clarify the type of danger, such as a factory entrance/exit, a leaning tree, etc."
   },
   {
     id: 38,
     img: img38,
-    type: { name: "Regulatory", extraDescription: "Speed limit" },
-    name: "Speed Limit 30 km/h",
-    description: "Maximum speed allowed is 30 km/h. Common in residential or school areas."
+    type: { name: "Warning", extraDescription: "CROSS ROAD" },
+    name: "Cross Road",
+    description: "This sign is used to warn drivers to be careful, as there are crossroads (an intersection) ahead."
   },
   {
     id: 39,
     img: img39,
-    type: { name: "Warning", extraDescription: "Sharp curve right" },
-    name: "Sharp Curve Right",
-    description: "Sharp curve to the right ahead. Reduce speed and stay in lane."
+    type: { name: "Prohibitory", extraDescription: "Speed Limit 30 km/h" },
+    name: "Speed Limit 30 km/h",
+    description: "Maximum speed allowed is 30 km/h. Drivers must not exceed this speed."
   },
   {
     id: 40,
     img: img40,
-    type: { name: "Warning", extraDescription: "Roundabout ahead" },
-    name: "Roundabout",
-    description: "Roundabout ahead. Yield to circulating traffic."
+    type: { name: "Warning", extraDescription: "RIGHT BEND" },
+    name: "Right Bend",
+    description: "This sign is used to warn drivers to be careful, as there is a curve to the right ahead."
   },
   {
     id: 41,
     img: img41,
-    type: { name: "Regulatory", extraDescription: "End of restriction" },
-    name: "End of Speed Limit",
-    description: "End of previous speed restriction or advisory zone."
+    type: { name: "Warning", extraDescription: "ROUND ABOUT" },
+    name: "Round About",
+    description: "This sign is used to warn drivers to be careful, as there is a roundabout ahead."
   }
 ];
 
 export const TotalSign = [
-  { id: 1, label: "Total Signs", value: "50+" },
-  { id: 2, label: "Categories", value: "5" },
+  { id: 1, label: "Total Signs", value: "42" },
+  { id: 2, label: "Categories", value: "6" },
   { id: 3, label: "Last Updated", value: "2025" },
 ];

@@ -2,8 +2,9 @@ import searchIcon from "../assets/SignInformation/search.svg";
 import Filtering from "../assets/SignInformation/filter.svg";
 import { signInforData, TotalSign } from "../utils/SignInfoData";
 import Warning_Signs from "../assets/SignInformation/Warning_Signs.svg";
-import Regulatory_Signs from "../assets/SignInformation/Regulatory_Signs.svg";
-import Informational_Signs from "../assets/SignInformation/Informational_Signs.svg";
+import Guide_Signs from "../assets/SignInformation/Guide_Sign.svg";
+import Give_way_Signs from "../assets/SignInformation/Give_way.svg";
+import Give_way_and_stop from "../assets/SignInformation/stop.svg"
 import Mandatory_Signs from "../assets/SignInformation/Mandatory_Signs.svg";
 import Prohibitory_Signs from "../assets/SignInformation/Prohibitory_Signs.svg"
 import { useState } from "react";
@@ -179,8 +180,6 @@ export default function SignInfo() {
           </p>
         )}
       </div>
-
-      {/* How to Identify - DYNAMIC VERSION */}
       {/* How to Identify - DYNAMIC VERSION */}
       <div className="w-full bg-gray-100 pt-20 pb-20 px-5 border-t border-gray-200">
         <div className="text-center mb-12">
@@ -221,20 +220,19 @@ export default function SignInfo() {
             <div className="bg-red-50 p-4 rounded-lg flex items-center justify-center">
               <div className="text-2xl text-red-500">
                 <img
-                  src={Regulatory_Signs}
+                  src={Guide_Signs}
                   alt="Regulatory"
                   className="w-fit h-auto"
                 />
               </div>
             </div>
             <div className="flex flex-col">
-              <h3 className="text-xl font-bold">Regulatory Signs</h3>
+              <h3 className="text-xl font-bold">Guide Signs</h3>
               <p className="text-gray-400 text-sm mt-1">
-                Indicate legal requirements and limits. Usually white with black
-                text or borders.
+                designed to tell you information, directions, and locations to help you navigate safely. 
               </p>
               <p className="text-gray-500 text-xs mt-3 font-medium">
-                Sign Count: {getCount("Regulatory")}
+                Sign Count: {getCount("Guide")}
               </p>
             </div>
           </div>
@@ -282,14 +280,14 @@ export default function SignInfo() {
             </div>
           </div>
 
-          {/* Informational Signs */}
+          {/* Give_way Signs */}
           <div className="flex gap-4 p-4 items-start bg-white rounded-2xl shadow-sm">
-            <div className="bg-blue-50 p-4 rounded-lg flex items-center justify-center">
+            <div className="bg-red-100 p-4 rounded-lg flex items-center justify-center">
               <div className="text-2xl text-blue-400">
                 <img
-                  src={Informational_Signs}
+                  src={Give_way_Signs}
                   alt="Informational"
-                  className=""
+                  className="w-20 h-auto"
                 />
               </div>
             </div>
@@ -300,7 +298,29 @@ export default function SignInfo() {
                 green rectangles.
               </p>
               <p className="text-gray-500 text-xs mt-3 font-medium">
-                Sign Count: {getCount("Information")}
+                Sign Count: {getCount("Give Way")}
+              </p>
+            </div>
+          </div>
+          {/* Give_way and stop Signs */}
+          <div className="flex gap-4 p-4 items-start bg-white rounded-2xl shadow-sm">
+            <div className="bg-red-100 p-4 rounded-lg flex items-center justify-center">
+              <div className="text-2xl text-blue-400">
+                <img
+                  src={Give_way_and_stop}
+                  alt="Informational"
+                  className="w-20 h-auto "
+                />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="text-xl font-bold">Stop And Give WaySigns</h3>
+              <p className="text-gray-400 text-sm mt-1">
+                Provide guidance about routes and services. Typically blue or
+                green rectangles.
+              </p>
+              <p className="text-gray-500 text-xs mt-3 font-medium">
+                Sign Count: {getCount("Stop And Give Way")}
               </p>
             </div>
           </div>
