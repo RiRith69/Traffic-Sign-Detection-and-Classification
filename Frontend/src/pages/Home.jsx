@@ -14,16 +14,16 @@ function Home() {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl pt-20 pb-8 sm:pt-26 sm:pb-8 lg:pt-40 lg:pb-10">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-            <div className="rounded-full px-4 py-1 text-sm font-bold text-amber-300 ring-1 ring-amber-900/10 hover:ring-gray-900/20 bg-amber-100">
+            <div className="rounded-full px-4 py-1 text-sm font-bold text-amber-500 ring-1 ring-amber-900/10 hover:ring-gray-900/20 bg-amber-100">
               Yolo-Powered Traffic Sign Detection
             </div>
           </div>
 
           {/* Main content */}
           <div className="text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            <div className="text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl">
               Khmer Traffic Sign <br></br> Detection System
-            </h1>
+            </div>
 
             <p className="mt-6 text-base text-black/60 sm:text-lg">
               This system uses YOLO-based deep learning to detect and classify
