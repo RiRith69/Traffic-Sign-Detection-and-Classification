@@ -1,11 +1,11 @@
 import imageDetection from "../assets/Features/imageDetection.svg";
 import videoDetection from "../assets/Features/videoDetection.svg";
-import WebcameCapture from "../assets/Features/WebcamDetection.svg";
+import WebcameCapture from "../assets/Features/webcamDetection.svg";
 import yoloModel from "../assets/Features/yoloModel.svg";
 import accuracy from "../assets/Features/accuracy.svg";
 import dataValidation from "../assets/Features/dataValidation.svg";
 import dataExport from "../assets/Features/dataExport.svg";
-import multiFormatSupport from "../assets/Features/multi-FormatSupport.svg";
+import multiFormatSupport from "../assets/Features/Multi-FormatSupport.svg";
 import signsInformation from "../assets/Features/signsInformation.svg";
 
 const technicalSpecifications = [
