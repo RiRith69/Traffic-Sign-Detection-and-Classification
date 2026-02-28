@@ -46,7 +46,7 @@ export default function SignInfo() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="text-7xl font-bold text-gray-900">
+        <div className="text-6xl sm:text-7xl font-bold text-gray-900">
           Explore Information <br /> About Signs
         </div>
         <p className="text-gray-500 mt-6 max-w-2xl mx-auto">
