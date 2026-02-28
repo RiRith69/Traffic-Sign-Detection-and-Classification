@@ -30,7 +30,7 @@ const featuresData = [
   {
     id: 2,
     icon: videoDetection,
-    title: "Image Detection",
+    title: "Video detection",
     description:
       " Process images and video streams instantly with our optimized YOLO model for live traffic sign identification.",
     DectectionModel1: "Detection Model",
@@ -40,7 +40,7 @@ const featuresData = [
   {
     id: 3,
     icon: WebcameCapture,
-    title: "Image Detection",
+    title: "Webcam detection",
     description:
       " Process images and video streams instantly with our optimized YOLO model for live traffic sign identification.",
     DectectionModel1: "Detection Model",
@@ -50,7 +50,7 @@ const featuresData = [
   {
     id: 4,
     icon: yoloModel,
-    title: "Image Detection",
+    title: "YOLO Model",
     description:
       " Process images and video streams instantly with our optimized YOLO model for live traffic sign identification.",
     DectectionModel1: "Detection Model",
@@ -60,7 +60,7 @@ const featuresData = [
   {
     id: 5,
     icon: accuracy,
-    title: "Image Detection",
+    title: "Accuracy",
     description:
       " Process images and video streams instantly with our optimized YOLO model for live traffic sign identification.",
     DectectionModel1: "Detection Model",
@@ -70,7 +70,7 @@ const featuresData = [
   {
     id: 6,
     icon: dataValidation,
-    title: "Image Detection",
+    title: "Data Validation",
     description:
       " Process images and video streams instantly with our optimized YOLO model for live traffic sign identification.",
     DectectionModel1: "Detection Model",
@@ -80,7 +80,7 @@ const featuresData = [
   {
     id: 7,
     icon: dataExport,
-    title: "Image Detection",
+    title: "Data Export",
     description:
       " Process images and video streams instantly with our optimized YOLO model for live traffic sign identification.",
     DectectionModel1: "Detection Model",
@@ -90,7 +90,7 @@ const featuresData = [
   {
     id: 8,
     icon: multiFormatSupport,
-    title: "Image Detection",
+    title: "Multi-Format Support",
     description:
       " Process images and video streams instantly with our optimized YOLO model for live traffic sign identification.",
     DectectionModel1: "Detection Model",
@@ -100,7 +100,7 @@ const featuresData = [
   {
     id: 9,
     icon: signsInformation,
-    title: "Image Detection",
+    title: "Signs Information",
     description:
       " Process images and video streams instantly with our optimized YOLO model for live traffic sign identification.",
     DectectionModel1: "Detection Model",
