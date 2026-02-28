@@ -150,15 +150,15 @@ function Home() {
 
           <p>Support for 33+ international traffic sign types</p>
           <p className="flex gap-0.5">
-            <img src={check} alt="check" />
+            <img src={check} alt="check" className="w-5 mr-0.5" />
             Automatic bounding box annotation and verification
           </p>
           <p className="flex gap-0.5">
-            <img src={check} alt="check" />
+            <img src={check} alt="check " className="w-5 mr-0.5" />
             Integrated database with sign meanings and regulations
           </p>
           <p className="flex gap-0.5">
-            <img src={check} alt="check" />
+            <img src={check} alt="check" className="w-5 mr-0.5"/>
             Project management and dataset version control
           </p>
           <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
