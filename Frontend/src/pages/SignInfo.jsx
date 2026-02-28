@@ -1,4 +1,4 @@
-import searchIcon from "../assets/SignInformation/search.svg";
+import searchIcon from "../assets/SignInformation/Search.svg";
 import Filtering from "../assets/SignInformation/filter.svg";
 import { signInforData, TotalSign } from "../utils/SignInfoData";
 import Warning_Signs from "../assets/SignInformation/Warning_Signs.svg";
