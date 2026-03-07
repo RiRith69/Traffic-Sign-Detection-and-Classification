@@ -1,24 +1,26 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Logo from "../assets/NavBar/logo.png";
+import LanguageSwitch from "./LanguageSwitch"; // Import your switch component
 import "../App.css";
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation(); // For active link highlighting
-
+  const location = useLocation(); 
+  const { t } = useTranslation();
   const hoverEffect = { scale: 1.05, transition: { duration: 0.2 } };
 
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/detectionCenter", label: "DetectionCenter" },
-    { path: "/features", label: "Features" },
-    { path: "/signinfo", label: "Sign Information" },
+    { path: "/", label: t("nav.home") },
+    { path: "/detectionCenter", label: t("nav.detection") },
+    { path: "/features", label: t("nav.features") },
+    { path: "/signinfo", label: t("nav.info") },
   ];
 
   return (
-    <div className="fixed top-0 left-0 right-0 shadow z-50">
+    <div className="fixed top-0 left-0 right-0 shadow z-50 ">
       <header className="absolute inset-x-0 top-0 bg-white">
         <nav
           className="flex items-center justify-between p-2 lg:px-8 text-black shadow"
@@ -30,8 +32,9 @@ export default function NavBar() {
             <img src={Logo} alt="Logo" className="h-20 w-auto" />
           </div>
 
-          {/* Mobile menu button */}
-          <div className="flex lg:hidden">
+          {/* Mobile menu button & Switch */}
+          <div className="flex lg:hidden items-center gap-4">
+            <LanguageSwitch /> 
             <button
               type="button"
               onClick={() => setMenuOpen((index) => !index)}
@@ -84,14 +87,15 @@ export default function NavBar() {
                 }`}
               >
                 <NavLink to={item.path}>
-                  <div className="text-black">{item.label}</div>
+                  <div className="text-black font-bold">{item.label}</div>
                 </NavLink>
               </motion.div>
             ))}
           </div>
 
           {/* Right side */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-6">
+            <LanguageSwitch /> 
             <motion.div
               whileHover={{
                 scale: 1.05,
@@ -104,7 +108,7 @@ export default function NavBar() {
                 to="/detectionCenter"
                 className="bg-amber-300 p-2 rounded-md text-sm font-semibold inline-block"
               >
-                <div className="text-black"> Launch Detection</div>
+                <div className="text-black">{t("nav.launchBtn")}</div>
               </NavLink>
             </motion.div>
           </div>
