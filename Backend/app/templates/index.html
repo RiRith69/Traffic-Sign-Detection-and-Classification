@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOLO Traffic Sign Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Traffic Sign Detection</h1>
+        
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Select Traffic Sign Image</label>
+            <input type="file" id="imageInput" accept="image/*" 
+                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+        </div>
+
+        <button onclick="uploadImage()" id="uploadBtn" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition shadow-lg disabled:bg-gray-400">
+            Run Detection
+        </button>
+
+        <div id="resultsArea" class="mt-8 hidden">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Detection Results</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <p class="text-sm text-gray-500 mb-2 font-medium">Image Preview:</p>
+                    <div class="relative">
+                        <img id="preview" class="w-full rounded-lg border shadow-sm">
+                    </div>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500 mb-2 font-medium">Data Output:</p>
+                    <div id="statusBadge" class="mb-2"></div>
+                    <pre id="jsonOutput" class="bg-gray-900 text-green-400 p-4 rounded-lg text-xs overflow-auto max-h-64 border-l-4 border-green-500"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+async function uploadImage() {
+    const fileInput = document.getElementById('imageInput');
+    const btn = document.getElementById('uploadBtn');
+    const resultsArea = document.getElementById('resultsArea');
+    const jsonOutput = document.getElementById('jsonOutput');
+    const preview = document.getElementById('preview');
+    const statusBadge = document.getElementById('statusBadge');
+
+    if (!fileInput.files[0]) return alert("Please select an image first!");
+
+    // 1. Prepare Data
+    const formData = new FormData();
+    // 'file' MUST match request.files['file'] in your Python routes.py
+    formData.append('file', fileInput.files[0]);
+
+    // 2. UI Loading State
+    btn.innerText = "Analyzing Image...";
+    btn.disabled = true;
+    resultsArea.classList.add('hidden');
+
+    try {
+        // 3. API Call
+        const response = await fetch('http://127.0.0.1:5000/predict', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Server error occurred");
+        }
+
+        const data = await response.json();
+        console.log("Response from Python:", data);
+
+        // 4. Handle Success
+        preview.src = URL.createObjectURL(fileInput.files[0]);
+        resultsArea.classList.remove('hidden');
+
+        if (!data.detections || data.detections.length === 0) {
+            statusBadge.innerHTML = '<span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">No Signs Found</span>';
+            jsonOutput.innerText = "Analysis complete: No traffic signs recognized.";
+        } else {
+            statusBadge.innerHTML = `<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Detected ${data.detections.length} Sign(s)</span>`;
+            
+            // Format the list of detections for the user
+            jsonOutput.innerText = data.detections.map((d, i) => 
+                `[${i+1}] ${d.label.toUpperCase()}\nConfidence: ${(d.confidence * 100).toFixed(1)}%\n`
+            ).join('\n---\n');
+        }
+
+    } catch (error) {
+        console.error("Connection Error:", error);
+        alert("Failed to connect to Backend: " + error.message);
+    } finally {
+        btn.innerText = "Run Detection";
+        btn.disabled = false;
+    }
+}
+</script>
+</body>
+</html>
