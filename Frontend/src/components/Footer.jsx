@@ -1,5 +1,6 @@
 import "../App.css";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // Added for translation
 import logoFooter from "../assets/Footer/logo-footer.png";
 import discord from "../assets/Footer/discord.svg";
 import facebook from "../assets/Footer/facebook.svg";
@@ -7,6 +8,8 @@ import telegram from "../assets/Footer/telegram.svg";
 import { motion } from "framer-motion";
 
 function Footer() {
+  const { t } = useTranslation(); // Added Hook
+
   const footerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i) => ({
@@ -32,11 +35,12 @@ function Footer() {
             alt="logoFooter"
             className="w-50 mx-auto lg:mx-0"
           />
-          <p className="text-sm text-black/70 font-semibold">
-            Khmer YOLO-powered traffic sign detection system.
+          <p className="text-sm text-black/70 font-semibold leading-relaxed">
+            {t("footer.description")}
           </p>
         </motion.div>
 
+        {/* Updated Product Column */}
         <motion.div
           className="flex flex-col gap-2 text-center lg:text-left"
           custom={1}
@@ -45,10 +49,10 @@ function Footer() {
           viewport={{ once: true }}
           variants={footerVariants}
         >
-          <h4 className="font-bold">Product</h4>
-          <Link to="/detectionCenter">Detection Center</Link>
-          <Link to="/features">Features</Link>
-          <Link to="/signInfo">Sign Database</Link>
+          <h4 className="font-bold mb-1">{t("footer.product")}</h4>
+          <Link to="/detectionCenter" className="leading-loose">{t("nav.detection")}</Link>
+          <Link to="/features" className="leading-loose">{t("nav.features")}</Link>
+          <Link to="/signInfo" className="leading-loose">{t("nav.info")}</Link>
         </motion.div>
 
         <motion.div
@@ -59,7 +63,7 @@ function Footer() {
           viewport={{ once: true }}
           variants={footerVariants}
         >
-          <h4 className="font-bold">Get in touch</h4>
+          <h4 className="font-bold">{t("footer.getInTouch")}</h4>
           <div className="flex justify-center lg:justify-start gap-5">
             <Link to="">
               <img src={discord} alt="discord" className="hover:scale-110 transition-transform" />
@@ -81,7 +85,7 @@ function Footer() {
           viewport={{ once: true }}
           variants={footerVariants}
         >
-          <h4 className="font-bold">Team</h4>
+          <h4 className="font-bold">{t("footer.team")}</h4>
           <Link to="">GitHub</Link>
           <Link to="">Telegram</Link>
           <Link to="">Google Meet</Link>
@@ -95,7 +99,7 @@ function Footer() {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
       >
-        © 2025 Traffic Sign. All rights reserved.
+       © 2025 Traffic Sign. All rights reserved.
       </motion.div>
     </footer>
   );
