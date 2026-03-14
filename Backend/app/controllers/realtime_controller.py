@@ -1,10 +1,29 @@
-# app/controllers/realtime_controller.py
-from flask import Response
-from app.services.realtime_service import generate_camera_stream
+# realtime_controller.py
+from flask import Blueprint, request, jsonify
+from app.services.realtime_service import process_frame, latest_detection
 
-def realtime_camera_controller():
-    """
-    Endpoint that streams camera with YOLO detection
-    """
-    return Response(generate_camera_stream(camera_id=0, frame_interval=1),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+realtime_bp = Blueprint("realtime", __name__)
+
+@realtime_bp.route("/frame", methods=["POST"])
+def receive_frame():
+    if "frame" not in request.files:
+        return jsonify({"error": "No frame uploaded"}), 400
+
+    file = request.files["frame"]
+    frame_bytes = file.read()
+    process_frame(frame_bytes)
+
+    # Return latest detection with boxes
+    return jsonify({
+        "label": latest_detection.get("label", "Detection processing..."),
+        "confidence": latest_detection.get("confidence", 0),
+        "boxes": latest_detection.get("boxes", [])
+    })
+
+@realtime_bp.route("/latest", methods=["GET"])
+def get_latest_detection():
+    return jsonify({
+        "label": latest_detection.get("label", "Detection processing..."),
+        "confidence": latest_detection.get("confidence", 0),
+        "boxes": latest_detection.get("boxes", [])
+    })

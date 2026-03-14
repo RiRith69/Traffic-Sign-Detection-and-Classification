@@ -1,45 +1,74 @@
-# app/services/realtime_service.py
+# realtime_service.py
 import cv2
+import threading
+import numpy as np
 from ultralytics import YOLO
 from app.config import Config
 
 # Load YOLO model once
 model = YOLO(Config.MODEL_PATH)
 
-def generate_camera_stream(camera_id=0, frame_interval=1):
-    """
-    Generator that yields MJPEG frames with YOLO detections
-    """
-    cap = cv2.VideoCapture(camera_id)
-    frame_count = 0
+# Global latest detection
+latest_detection = {
+    "label": "Detection processing...",
+    "confidence": 0.0,
+    "boxes": []
+}
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
+lock = threading.Lock()
 
-        # Run detection every N frames
-        if frame_count % frame_interval == 0:
-            results = model(frame)
-            for r in results:
-                for box in r.boxes:
-                    x1, y1, x2, y2 = box.xyxy[0].tolist()
-                    conf = float(box.conf)
-                    cls = int(box.cls)
-                    # Draw bbox and label on the frame
-                    cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
-                    cv2.putText(frame, f"{model.names[cls]} {conf:.2f}", 
-                                (int(x1), int(y1)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+def update_latest_detection(label, conf, boxes):
+    """Thread-safe update of latest detection."""
+    with lock:
+        latest_detection["label"] = label
+        latest_detection["confidence"] = conf
+        latest_detection["boxes"] = boxes
 
-        frame_count += 1
+def process_frame(frame_bytes):
+    """Process a single webcam frame."""
+    nparr = np.frombuffer(frame_bytes, np.uint8)
+    frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    if frame is None:
+        return
 
-        # Encode frame as JPEG
-        ret, jpeg = cv2.imencode('.jpg', frame)
-        if not ret:
-            continue
+    # Resize for speed (optional)
+    frame = cv2.resize(frame, (640, 640))
 
-        # Yield frame in MJPEG format
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n')
+    boxes_list = []
+    results = model(frame)
+    for r in results:
+        for box in r.boxes:
+            cls = int(box.cls)
+            label = model.names[cls]
+            conf = float(box.conf)
+            x1, y1, x2, y2 = box.xyxy[0].tolist()
+            w, h = x2 - x1, y2 - y1
 
-    cap.release()
+            boxes_list.append({
+                "x": int(x1),
+                "y": int(y1),
+                "width": int(w),
+                "height": int(h),
+                "label": label,
+                "confidence": conf
+            })
+
+    # Update once per frame
+    if boxes_list:
+        first_box = max(boxes_list, key=lambda b: b['confidence'])
+        update_latest_detection(first_box['label'], first_box['confidence'], boxes_list)
+
+# Background webcam loop
+def start_webcam_loop(cam_index=0):
+    def loop():
+        cap = cv2.VideoCapture(cam_index)
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                continue
+            # Encode frame to bytes
+            _, buffer = cv2.imencode('.jpg', frame)
+            frame_bytes = buffer.tobytes()
+            process_frame(frame_bytes)
+
+    threading.Thread(target=loop, daemon=True).start()
