@@ -1,8 +1,12 @@
-# app/routes/realtime_routes.py
+from flask_cors import CORS
 from flask import Blueprint
-from app.controllers.realtime_controller import realtime_camera_controller
+from app.controllers.realtime_controller import realtime_bp
 
-realtime_bp = Blueprint("realtime", __name__)
+# Create a wrapper blueprint
+realtime_routes_bp = Blueprint("realtime_routes", __name__)
 
-# Access live camera stream
-realtime_bp.route("/stream/camera", methods=["GET"])(realtime_camera_controller)
+# Enable CORS for your React frontend
+CORS(realtime_bp, origins=["http://localhost:5173"])
+
+# Register the controller blueprint inside this wrapper
+realtime_routes_bp.register_blueprint(realtime_bp, url_prefix="")
