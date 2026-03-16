@@ -1,45 +1,57 @@
-# app/services/realtime_service.py
 import cv2
+import numpy as np
 from ultralytics import YOLO
 from app.config import Config
 
-# Load YOLO model once
+# Load YOLO model ONCE
 model = YOLO(Config.MODEL_PATH)
 
-def generate_camera_stream(camera_id=0, frame_interval=1):
-    """
-    Generator that yields MJPEG frames with YOLO detections
-    """
-    cap = cv2.VideoCapture(camera_id)
-    frame_count = 0
+def process_frame(frame_bytes):
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
+    nparr = np.frombuffer(frame_bytes, np.uint8)
+    frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-        # Run detection every N frames
-        if frame_count % frame_interval == 0:
-            results = model(frame)
-            for r in results:
-                for box in r.boxes:
-                    x1, y1, x2, y2 = box.xyxy[0].tolist()
-                    conf = float(box.conf)
-                    cls = int(box.cls)
-                    # Draw bbox and label on the frame
-                    cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
-                    cv2.putText(frame, f"{model.names[cls]} {conf:.2f}", 
-                                (int(x1), int(y1)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+    if frame is None:
+        return {"label": "Invalid frame", "confidence": 0, "boxes": []}
 
-        frame_count += 1
+    orig_h, orig_w = frame.shape[:2]
 
-        # Encode frame as JPEG
-        ret, jpeg = cv2.imencode('.jpg', frame)
-        if not ret:
-            continue
+    resized = cv2.resize(frame, (320, 320))
 
-        # Yield frame in MJPEG format
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n')
+    results = model(resized, conf=0.25, verbose=False)
 
-    cap.release()
+    scale_x = orig_w / 320
+    scale_y = orig_h / 320
+
+    boxes_list = []
+
+    for r in results:
+        for box in r.boxes:
+
+            cls = int(box.cls)
+            conf = float(box.conf)
+
+            x1, y1, x2, y2 = box.xyxy[0].tolist()
+
+            boxes_list.append({
+                "x": int(x1 * scale_x),
+                "y": int(y1 * scale_y),
+                "width": int((x2 - x1) * scale_x),
+                "height": int((y2 - y1) * scale_y),
+                "label": model.names[cls],
+                "confidence": conf
+            })
+
+    label = "No object"
+    confidence = 0
+
+    if boxes_list:
+        best = max(boxes_list, key=lambda b: b["confidence"])
+        label = best["label"]
+        confidence = best["confidence"]
+
+    return {
+        "label": label,
+        "confidence": confidence,
+        "boxes": boxes_list
+    }

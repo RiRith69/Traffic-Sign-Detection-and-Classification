@@ -11,4 +11,6 @@ detection_bp.route("/detect/images", methods=["POST"])(
 )
 
 # Video detection (no CORS)
-detection_bp.route("/detect/video", methods=["POST"])(detect_video_controller)
+detection_bp.route("/detect/video", methods=["POST"])(
+    cross_origin(origin="http://localhost:5173")(detect_video_controller)
+)
