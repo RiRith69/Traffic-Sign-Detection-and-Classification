@@ -1,29 +1,33 @@
-# realtime_controller.py
-from flask import Blueprint, request, jsonify
-from app.services.realtime_service import process_frame, latest_detection
+from app.extensions import socketio
+from app.services.realtime_service import process_frame
+from flask_socketio import emit
+import base64
 
-realtime_bp = Blueprint("realtime", __name__)
+@socketio.on("connect")
+def handle_connect():
+    print("Client connected")
 
-@realtime_bp.route("/frame", methods=["POST"])
-def receive_frame():
-    if "frame" not in request.files:
-        return jsonify({"error": "No frame uploaded"}), 400
+@socketio.on("disconnect")
+def handle_disconnect():
+    print("Client disconnected")
 
-    file = request.files["frame"]
-    frame_bytes = file.read()
-    process_frame(frame_bytes)
+@socketio.on("frame")
+def handle_frame(data):
+    socketio.start_background_task(process_and_emit, data)
 
-    # Return latest detection with boxes
-    return jsonify({
-        "label": latest_detection.get("label", "Detection processing..."),
-        "confidence": latest_detection.get("confidence", 0),
-        "boxes": latest_detection.get("boxes", [])
-    })
 
-@realtime_bp.route("/latest", methods=["GET"])
-def get_latest_detection():
-    return jsonify({
-        "label": latest_detection.get("label", "Detection processing..."),
-        "confidence": latest_detection.get("confidence", 0),
-        "boxes": latest_detection.get("boxes", [])
-    })
+def process_and_emit(data):
+    try:
+        img_bytes = base64.b64decode(data.split(",")[1])
+
+        result = process_frame(img_bytes)
+
+        socketio.emit("result", result)
+
+    except Exception as e:
+        print("Frame processing error:", e)
+        socketio.emit("result", {
+            "label": "Error",
+            "confidence": 0,
+            "boxes": []
+        })
