@@ -42,3 +42,29 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Default English Font */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Force spacing for Khmer globally */
+html[lang="kh"] body {
+  font-family: 'Noto Serif Khmer', serif !important;
+  line-height: 2.2 !important; /* Higher value to be safe */
+  letter-spacing: 0.03em !important;
+}
+
+/* Specifically fix headers and paragraphs */
+html[lang="kh"] h1, 
+html[lang="kh"] h2, 
+html[lang="kh"] div, 
+html[lang="kh"] p {
+  line-height: 1.6 !important;
+  /* padding-bottom: 0.5rem !important;  */
+}
+
+/* Optional: Make Khmer text slightly larger */
+body:lang(kh) .text-sm {
+  font-size: 0.85rem; 
+}
