@@ -1,74 +1,57 @@
-# realtime_service.py
 import cv2
-import threading
 import numpy as np
 from ultralytics import YOLO
 from app.config import Config
 
-# Load YOLO model once
+# Load YOLO model ONCE
 model = YOLO(Config.MODEL_PATH)
 
-# Global latest detection
-latest_detection = {
-    "label": "Detection processing...",
-    "confidence": 0.0,
-    "boxes": []
-}
-
-lock = threading.Lock()
-
-def update_latest_detection(label, conf, boxes):
-    """Thread-safe update of latest detection."""
-    with lock:
-        latest_detection["label"] = label
-        latest_detection["confidence"] = conf
-        latest_detection["boxes"] = boxes
-
 def process_frame(frame_bytes):
-    """Process a single webcam frame."""
+
     nparr = np.frombuffer(frame_bytes, np.uint8)
     frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    if frame is None:
-        return
 
-    # Resize for speed (optional)
-    frame = cv2.resize(frame, (640, 640))
+    if frame is None:
+        return {"label": "Invalid frame", "confidence": 0, "boxes": []}
+
+    orig_h, orig_w = frame.shape[:2]
+
+    resized = cv2.resize(frame, (320, 320))
+
+    results = model(resized, conf=0.25, verbose=False)
+
+    scale_x = orig_w / 320
+    scale_y = orig_h / 320
 
     boxes_list = []
-    results = model(frame)
+
     for r in results:
         for box in r.boxes:
+
             cls = int(box.cls)
-            label = model.names[cls]
             conf = float(box.conf)
+
             x1, y1, x2, y2 = box.xyxy[0].tolist()
-            w, h = x2 - x1, y2 - y1
 
             boxes_list.append({
-                "x": int(x1),
-                "y": int(y1),
-                "width": int(w),
-                "height": int(h),
-                "label": label,
+                "x": int(x1 * scale_x),
+                "y": int(y1 * scale_y),
+                "width": int((x2 - x1) * scale_x),
+                "height": int((y2 - y1) * scale_y),
+                "label": model.names[cls],
                 "confidence": conf
             })
 
-    # Update once per frame
+    label = "No object"
+    confidence = 0
+
     if boxes_list:
-        first_box = max(boxes_list, key=lambda b: b['confidence'])
-        update_latest_detection(first_box['label'], first_box['confidence'], boxes_list)
+        best = max(boxes_list, key=lambda b: b["confidence"])
+        label = best["label"]
+        confidence = best["confidence"]
 
-# Background webcam loop
-def start_webcam_loop(cam_index=0):
-    def loop():
-        cap = cv2.VideoCapture(cam_index)
-        while True:
-            ret, frame = cap.read()
-            if not ret:
-                continue
-            # Encode frame to bytes
-            _, buffer = cv2.imencode('.jpg', frame)
-            frame_bytes = buffer.tobytes()
-            process_frame(frame_bytes)
-
-    threading.Thread(target=loop, daemon=True).start()
+    return {
+        "label": label,
+        "confidence": confidence,
+        "boxes": boxes_list
+    }
