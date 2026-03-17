@@ -40,305 +40,54 @@ import img38 from "../assets/SignInformation/Signlabel/38.png";
 import img39 from "../assets/SignInformation/Signlabel/39.png";
 import img40 from "../assets/SignInformation/Signlabel/40.png";
 import img41 from "../assets/SignInformation/Signlabel/41.png";
-export const signInforData =[
-  {
-    id: 0,
-    img: img0,
-    type: { name: "Guide", extraDescription: "PEDESTRIAN CROSSING AREA" },
-    name: "Pedestrian Crossing Area",
-    description: "This sign is used to inform road users about pedestrian crossing locations."
-  },
-  {
-    id: 1,
-    img: img1,
-    type: { name: "Prohibitory", extraDescription: "NO TURN LEFT" },
-    name: "No Turn Left",
-    description: "This sign prohibits all types of vehicles from turning left."
-  },
-  {
-    id: 2,
-    img: img2,
-    type: { name: "Prohibitory", extraDescription: "NO TURN RIGHT" },
-    name: "No Turn Right",
-    description: "This sign prohibits all types of vehicles from turning right."
-  },
-  {
-    id: 3,
-    img: img3,
-    type: { name: "Prohibitory", extraDescription: "NO U TURN" },
-    name: "No U-turn",
-    description: "This sign prohibits all types of vehicles from making a U-turn."
-  },
-  {
-    id: 4,
-    img: img4,
-    type: { name: "Prohibitory", extraDescription: "NO ENTRY" },
-    name: "No Entry",
-    description: "This sign prohibits entry for all types of vehicles."
-  },
-  {
-    id: 5,
-    img: img5,
-    type: { name: "Prohibitory", extraDescription: "Speed limit" },
-    name: "Speed Limit 20 km/h",
-    description: "Maximum speed allowed is 20 km/h. Often used in school zones or narrow roads."
-  },
-  {
-    id: 6,
-    img: img6,
-    type: { name: "Prohibitory", extraDescription: "NO PARKING ON EVEN DAYS" },
-    name: "No Parking On Even Days",
-    description: "This sign prohibits parking for all types of vehicles on even-numbered days of each month. However, drivers may stop to pick up/drop off passengers or load/unload goods for the necessary duration. The transition from even days to odd days occurs between 21:00 and 21:30."
-  },
-  {
-    id: 7,
-    img: img7,
-    type: { name: "Prohibitory", extraDescription: "NO PARKING" },
-    name: "No Parking",
-    description: "This sign prohibits parking for all types of vehicles. However, drivers may stop to pick up/drop off passengers or load/unload goods for the necessary duration."
-  },
-  {
-    id: 8,
-    img: img8,
-    type: { name: "Prohibitory", extraDescription: "NO STOPPING" },
-    name: "No Stopping",
-    description: "This sign prohibits stopping for all types of vehicles."
-  },
-  {
-    id: 9,
-    img: img9,
-    type: { name: "Prohibitory", extraDescription: "NO OVERTAKING" },
-    name: "No Overtaking",
-    description: "This sign prohibits all types of motor vehicles from overtaking, except for motorcycles."
-  },
-  {
-    id: 10,
-    img: img10,
-    type: { name: "Prohibitory", extraDescription: "Speed limit" },
-    name: "Speed Limit 40 km/h",
-    description: "Maximum speed allowed is 40 km/h. Drivers must not exceed this speed."
-  },
-  {
-    id: 11,
-    img: img11,
-    type: { name: "Prohibitory", extraDescription: "Speed limit" },
-    name: "Speed Limit 90 km/h",
-    description: "Maximum speed allowed is 90 km/h."
-  },
-  {
-    id: 12,
-    img: img12,
-    type: { name: "Mandatory", extraDescription: "KEEP RIGHT" },
-    name: "Keep Right",
-    description: "This sign requires all types of vehicles to turn or pass to the right."
-  },
-  {
-    id: 13,
-    img: img13,
-    type: { name: "Prohibitory", extraDescription: "Speed limit" },
-    name: "Speed Limit 60 km/h",
-    description: "Maximum speed allowed is 60 km/h."
-  },
-  {
-    id: 14,
-    img: img14,
-    type: { name: "Prohibitory", extraDescription: "NO PARKING ON ODD DAYS" },
-    name: "No Parking On Odd Days",
-    description: "This sign prohibits parking for all types of vehicles on odd-numbered days of each month. However, drivers may stop to pick up/drop off passengers or load/unload goods for the necessary duration. The transition from odd days to even days occurs between 21:00 and 21:30."
-  },
-  {
-    id: 15,
-    img: img15,
-    type: { name: "Mandatory", extraDescription: "TURN RIGHT AHEAD" },
-    name: "Turn Right Ahead",
-    description: "This sign requires all types of vehicles to turn right at the upcoming intersection, behind the sign."
-  },
-  {
-    id: 16,
-    img: img16,
-    type: { name: "Warning", extraDescription: "LEFT BEND" },
-    name: "Left Bend",
-    description: "This sign is used to warn drivers to be careful, as there is a curve to the left ahead."
-  },
-  {
-    id: 17,
-    img: img17,
-    type: { name: "Warning", extraDescription: "ROAD HUMP" },
-    name: "Road Hump",
-    description: "This sign is used to warn drivers to be careful, as there is a hump in the road ahead."
-  },
-  {
-    id: 18,
-    img: img18,
-    type: { name: "Warning", extraDescription: "RAILWAY CROSSING WITHOUT GATES" },
-    name: "Railway Crossing Without Gates",
-    description: "This sign is used to warn drivers to be careful, as there is a railway crossing ahead without protective barriers."
-  },
-  {
-    id: 19,
-    img: img19,
-    type: { name: "Guide", extraDescription: "ONE WAY TRAFFIC" },
-    name: "One Way Traffic",
-    description: "This sign is used to inform drivers about a one-way road, where traffic is allowed to travel in only one direction as indicated by the arrow."
-  },
-  {
-    id: 20,
-    img: img20,
-    type: { name: "Prohibitory", extraDescription: "NO HORN" },
-    name: "No Horn",
-    description: "This sign prohibits all types of vehicles from honking their horns, except in cases of an immediate danger or emergency."
-  },
-  {
-    id: 21,
-    img: img21,
-    type: { name: "Mandatory", extraDescription: "SLOW DOWN" },
-    name: "Slow Down",
-    description: "This sign requires drivers of all types of vehicles to reduce their speed."
-  },
-  {
-    id: 22,
-    img: img22,
-    type: { name: "Stop And Give Way", extraDescription: "Stop" },
-    name: "Stop",
-    description: "This sign marks a road that has lost the right-of-way. The driver must stop even if there are no other vehicles crossing ahead. The driver can only continue forward if the road to be crossed is clear."
-  },
-  {
-    id: 23,
-    img: img23,
-    type: { name: "Give Way", extraDescription: "GIVE WAY (at Roundabout)" },
-    name: "Give Way (at Roundabout)",
-    description: "This sign marks a road that has lost the right-of-way. The driver must reduce speed or stop in order to give priority to vehicles already inside the roundabout."
-  },
-  {
-    id: 24,
-    img: img24,
-    type: { name: "Warning", extraDescription: "PRIORITY ROAD (PRIORITY AT THE FIRST JUNCTION)" },
-    name: "Priority Road (Priority At The First Junction)",
-    description: "This sign marks a priority road (main road) that has a minor road (small road) crossing ahead."
-  },
-  {
-    id: 25,
-    img: img25,
-    type: { name: "Give Way", extraDescription: "GIVE WAY (at Intersection)" },
-    name: "Give Way (at Intersection)",
-    description: "This sign marks a road that has lost the right-of-way. The driver must reduce speed; if the road is clear, they may cross. If the road is not clear, the driver must stop and wait until the road is clear before they can continue their journey."
-  },
-  {
-    id: 26,
-    img: img26,
-    type: { name: "Warning", extraDescription: "ROAD JUNCTION ON THE LEFT" },
-    name: "Road Junction On The Left",
-    description: "This sign is used to warn drivers to be careful, as there is a T-junction (side road) to the left ahead."
-  },
-  {
-    id: 27,
-    img: img27,
-    type: { name: "Warning", extraDescription: "ROAD JUNCTION ON THE RIGHT" },
-    name: "Road Junction On The Right",
-    description: "This sign is used to warn drivers to be careful, as there is a T-junction (side road) to the right ahead."
-  },
-  {
-    id: 28,
-    img: img28,
-    type: { name: "Warning", extraDescription: "STAGGERED JUNCTION, RIGHT TURN FIRST" },
-    name: "Staggered Junction, Right Turn First",
-    description: "This sign is used to warn drivers to be careful, as there is a staggered junction ahead, first to the right and then to the left."
-  },
-  {
-    id: 29,
-    img: img29,
-    type: { name: "Warning", extraDescription: "STAGGERED JUNCTION, LEFT TURN FIRST" },
-    name: "Staggered Junction, Left Turn First",
-    description: "This sign is used to warn drivers to be careful, as there is a staggered junction ahead, first to the left and then to the right."
-  },
-  {
-    id: 30,
-    img: img30,
-    type: { name: "Warning", extraDescription: "CARRIAGE WAY NARROWS" },
-    name: "Carriage Way Narrows",
-    description: "This sign is used to warn drivers to be careful, as the road narrows ahead."
-  },
-  {
-    id: 31,
-    img: img31,
-    type: { name: "Warning", extraDescription: "CARRIAGE WAY NARROWS ON RHS" },
-    name: "Carriage Way Narrows On RHS",
-    description: "This sign is used to warn drivers to be careful, as the road narrows on the right ahead."
-  },
-  {
-    id: 32,
-    img: img32,
-    type: { name: "Warning", extraDescription: "CARRIAGE WAY NARROWS ON LHS" },
-    name: "Carriage Way Narrows On LHS",
-    description: "This sign is used to warn drivers to be careful, as the road narrows on the left ahead."
-  },
-  {
-    id: 33,
-    img: img33,
-    type: { name: "Warning", extraDescription: "CHILDREN CROSSING" },
-    name: "Children Crossing",
-    description: "This sign is used to warn drivers to be careful, as there may be children crossing ahead."
-  },
-  {
-    id: 34,
-    img: img34,
-    type: { name: "Warning", extraDescription: "PEDESTRIAN CROSSING" },
-    name: "Pedestrian Crossing",
-    description: "This sign is used to warn drivers to be careful, as there may be pedestrians crossing ahead."
-  },
-  {
-    id: 35,
-    img: img35,
-    type: { name: "Warning", extraDescription: "TRAFFIC LIGHTS" },
-    name: "Traffic Lights",
-    description: "This sign is used to warn drivers to be careful, as there are traffic lights (stoplights) ahead. This sign is used only in cases where the geography does not favor the driver being able to see the traffic lights ahead clearly."
-  },
-  {
-    id: 36,
-    img: img36,
-    type: { name: "Prohibitory", extraDescription: "NO ENTRY FOR LARGED-SIZED TRUCK" },
-    name: "No Entry For Larged-Sized Truck",
-    description: "This sign prohibits entry for heavy goods vehicles (trucks) with a total weight exceeding 3.50 tons."
-  },
-  {
-    id: 37,
-    img: img37,
-    type: { name: "Warning", extraDescription: "DENGERS" },
-    name: "Dengers",
-    description: "This sign is used to indicate various dangers that are not specified in other types of warning signs. Underneath this sign, a description must be written to clarify the type of danger, such as a factory entrance/exit, a leaning tree, etc."
-  },
-  {
-    id: 38,
-    img: img38,
-    type: { name: "Warning", extraDescription: "CROSS ROAD" },
-    name: "Cross Road",
-    description: "This sign is used to warn drivers to be careful, as there are crossroads (an intersection) ahead."
-  },
-  {
-    id: 39,
-    img: img39,
-    type: { name: "Prohibitory", extraDescription: "Speed Limit 30 km/h" },
-    name: "Speed Limit 30 km/h",
-    description: "Maximum speed allowed is 30 km/h. Drivers must not exceed this speed."
-  },
-  {
-    id: 40,
-    img: img40,
-    type: { name: "Warning", extraDescription: "RIGHT BEND" },
-    name: "Right Bend",
-    description: "This sign is used to warn drivers to be careful, as there is a curve to the right ahead."
-  },
-  {
-    id: 41,
-    img: img41,
-    type: { name: "Warning", extraDescription: "ROUND ABOUT" },
-    name: "Round About",
-    description: "This sign is used to warn drivers to be careful, as there is a roundabout ahead."
-  }
+
+export const signInforData = [
+{ id:0,img:img0,type:{key:"signType.guide"},nameKey:"signs.0.name",descriptionKey:"signs.0.desc"},
+{ id:1,img:img1,type:{key:"signType.prohibitory"},nameKey:"signs.1.name",descriptionKey:"signs.1.desc"},
+{ id:2,img:img2,type:{key:"signType.prohibitory"},nameKey:"signs.2.name",descriptionKey:"signs.2.desc"},
+{ id:3,img:img3,type:{key:"signType.prohibitory"},nameKey:"signs.3.name",descriptionKey:"signs.3.desc"},
+{ id:4,img:img4,type:{key:"signType.prohibitory"},nameKey:"signs.4.name",descriptionKey:"signs.4.desc"},
+{ id:5,img:img5,type:{key:"signType.prohibitory"},nameKey:"signs.5.name",descriptionKey:"signs.5.desc"},
+{ id:6,img:img6,type:{key:"signType.prohibitory"},nameKey:"signs.6.name",descriptionKey:"signs.6.desc"},
+{ id:7,img:img7,type:{key:"signType.prohibitory"},nameKey:"signs.7.name",descriptionKey:"signs.7.desc"},
+{ id:8,img:img8,type:{key:"signType.prohibitory"},nameKey:"signs.8.name",descriptionKey:"signs.8.desc"},
+{ id:9,img:img9,type:{key:"signType.prohibitory"},nameKey:"signs.9.name",descriptionKey:"signs.9.desc"},
+{ id:10,img:img10,type:{key:"signType.prohibitory"},nameKey:"signs.10.name",descriptionKey:"signs.10.desc"},
+{ id:11,img:img11,type:{key:"signType.prohibitory"},nameKey:"signs.11.name",descriptionKey:"signs.11.desc"},
+{ id:12,img:img12,type:{key:"signType.mandatory"},nameKey:"signs.12.name",descriptionKey:"signs.12.desc"},
+{ id:13,img:img13,type:{key:"signType.prohibitory"},nameKey:"signs.13.name",descriptionKey:"signs.13.desc"},
+{ id:14,img:img14,type:{key:"signType.prohibitory"},nameKey:"signs.14.name",descriptionKey:"signs.14.desc"},
+{ id:15,img:img15,type:{key:"signType.mandatory"},nameKey:"signs.15.name",descriptionKey:"signs.15.desc"},
+{ id:16,img:img16,type:{key:"signType.warning"},nameKey:"signs.16.name",descriptionKey:"signs.16.desc"},
+{ id:17,img:img17,type:{key:"signType.warning"},nameKey:"signs.17.name",descriptionKey:"signs.17.desc"},
+{ id:18,img:img18,type:{key:"signType.warning"},nameKey:"signs.18.name",descriptionKey:"signs.18.desc"},
+{ id:19,img:img19,type:{key:"signType.guide"},nameKey:"signs.19.name",descriptionKey:"signs.19.desc"},
+{ id:20,img:img20,type:{key:"signType.prohibitory"},nameKey:"signs.20.name",descriptionKey:"signs.20.desc"},
+{ id:21,img:img21,type:{key:"signType.mandatory"},nameKey:"signs.21.name",descriptionKey:"signs.21.desc"},
+{ id:22,img:img22,type:{key:"signType.stopgive"},nameKey:"signs.22.name",descriptionKey:"signs.22.desc"},
+{ id:23,img:img23,type:{key:"signType.giveway"},nameKey:"signs.23.name",descriptionKey:"signs.23.desc"},
+{ id:24,img:img24,type:{key:"signType.warning"},nameKey:"signs.24.name",descriptionKey:"signs.24.desc"},
+{ id:25,img:img25,type:{key:"signType.giveway"},nameKey:"signs.25.name",descriptionKey:"signs.25.desc"},
+{ id:26,img:img26,type:{key:"signType.warning"},nameKey:"signs.26.name",descriptionKey:"signs.26.desc"},
+{ id:27,img:img27,type:{key:"signType.warning"},nameKey:"signs.27.name",descriptionKey:"signs.27.desc"},
+{ id:28,img:img28,type:{key:"signType.warning"},nameKey:"signs.28.name",descriptionKey:"signs.28.desc"},
+{ id:29,img:img29,type:{key:"signType.warning"},nameKey:"signs.29.name",descriptionKey:"signs.29.desc"},
+{ id:30,img:img30,type:{key:"signType.warning"},nameKey:"signs.30.name",descriptionKey:"signs.30.desc"},
+{ id:31,img:img31,type:{key:"signType.warning"},nameKey:"signs.31.name",descriptionKey:"signs.31.desc"},
+{ id:32,img:img32,type:{key:"signType.warning"},nameKey:"signs.32.name",descriptionKey:"signs.32.desc"},
+{ id:33,img:img33,type:{key:"signType.warning"},nameKey:"signs.33.name",descriptionKey:"signs.33.desc"},
+{ id:34,img:img34,type:{key:"signType.warning"},nameKey:"signs.34.name",descriptionKey:"signs.34.desc"},
+{ id:35,img:img35,type:{key:"signType.warning"},nameKey:"signs.35.name",descriptionKey:"signs.35.desc"},
+{ id:36,img:img36,type:{key:"signType.prohibitory"},nameKey:"signs.36.name",descriptionKey:"signs.36.desc"},
+{ id:37,img:img37,type:{key:"signType.warning"},nameKey:"signs.37.name",descriptionKey:"signs.37.desc"},
+{ id:38,img:img38,type:{key:"signType.warning"},nameKey:"signs.38.name",descriptionKey:"signs.38.desc"},
+{ id:39,img:img39,type:{key:"signType.prohibitory"},nameKey:"signs.39.name",descriptionKey:"signs.39.desc"},
+{ id:40,img:img40,type:{key:"signType.warning"},nameKey:"signs.40.name",descriptionKey:"signs.40.desc"},
+{ id:41,img:img41,type:{key:"signType.warning"},nameKey:"signs.41.name",descriptionKey:"signs.41.desc"}
 ];
 
 export const TotalSign = [
-  { id: 1, label: "Total Signs", value: "42" },
-  { id: 2, label: "Categories", value: "6" },
-  { id: 3, label: "Last Updated", value: "2025" },
+  { id: 1, labelKey: "signStats.total", value: "42" },
+  { id: 2, labelKey: "signStats.categories", value: "6" },
+  { id: 3, labelKey: "signStats.updated", value: "2025" }
 ];
