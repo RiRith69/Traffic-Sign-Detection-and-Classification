@@ -8,14 +8,18 @@ import {
   Loader2,
 } from "lucide-react";
 import { io } from "socket.io-client";
+import { useTranslation } from "react-i18next";
+import { enSigns } from "../locales/en/signContent"; // adjust path if needed
 
 const socket = io("http://localhost:5000");
 
 function WebcamCapture() {
+  const { t } = useTranslation();
+
   const [isLive, setIsLive] = useState(false);
   const [frameSkipRate, setFrameSkipRate] = useState(1);
   const [detection, setDetection] = useState({
-    label: "Detection processing...",
+    label: t("webcam.processing"),
     confidence: "0%",
   });
   const [loading, setLoading] = useState(false);
@@ -25,11 +29,23 @@ function WebcamCapture() {
   const intervalRef = useRef(null);
   const frameCountRef = useRef(0);
 
-  // Receive detection results
+  // translate sign name using signContent.js
+  const translateSign = (label) => {
+    const signs = enSigns.signs;
+
+    const key = Object.keys(signs).find(
+      (k) => signs[k].name.toLowerCase() === label?.toLowerCase(),
+    );
+
+    if (!key) return label;
+
+    return t(`signs.${key}.name`, { defaultValue: signs[key].name });
+  };
+
   useEffect(() => {
     socket.on("result", (data) => {
       setDetection({
-        label: data.label || "Detection processing...",
+        label: data.label ? translateSign(data.label) : t("webcam.processing"),
         confidence: data.confidence
           ? (data.confidence * 100).toFixed(1) + "%"
           : "0%",
@@ -72,7 +88,7 @@ function WebcamCapture() {
       ctx.fillStyle = "red";
       ctx.font = "14px Arial";
       ctx.fillText(
-        `${box.label} ${(box.confidence * 100).toFixed(0)}%`,
+        `${translateSign(box.label)} ${(box.confidence * 100).toFixed(0)}%`,
         x,
         y - 5,
       );
@@ -147,12 +163,12 @@ function WebcamCapture() {
           <div className="space-y-6">
             <div className="flex items-center gap-3 border-b pb-4">
               <Settings2 className="text-amber-500" size={20} />
-              <h2 className="text-lg font-bold">Webcam Configuration</h2>
+              <h2 className="text-lg font-bold">{t("webcam.config")}</h2>
             </div>
 
             <div>
               <label className="text-xs font-bold uppercase text-neutral-500">
-                Frame Skip Rate
+                {t("webcam.frameSkip")}
               </label>
 
               <select
@@ -160,11 +176,11 @@ function WebcamCapture() {
                 onChange={(e) => setFrameSkipRate(Number(e.target.value))}
                 className="w-full p-3 mt-2 border rounded-xl"
               >
-                <option value={1}>Every frame</option>
-                <option value={2}>Every 2 frames</option>
-                <option value={3}>Every 3 frames</option>
-                <option value={4}>Every 4 frames</option>
-                <option value={5}>Every 5 frames</option>
+                <option value={1}>{t("webcam.frames.f1")}</option>
+                <option value={2}>{t("webcam.frames.f2")}</option>
+                <option value={3}>{t("webcam.frames.f3")}</option>
+                <option value={4}>{t("webcam.frames.f4")}</option>
+                <option value={5}>{t("webcam.frames.f5")}</option>
               </select>
             </div>
 
@@ -172,7 +188,7 @@ function WebcamCapture() {
               onClick={startWebcam}
               className="w-full py-3 bg-amber-400 hover:bg-amber-500 rounded-xl font-bold flex justify-center gap-2"
             >
-              <Play size={18} /> Start Webcam
+              <Play size={18} /> {t("webcam.start")}
             </button>
           </div>
         ) : (
@@ -180,14 +196,14 @@ function WebcamCapture() {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="font-bold text-sm">Live Detection Active</span>
+                <span className="font-bold text-sm">{t("webcam.live")}</span>
               </div>
 
               <button
                 onClick={stopWebcam}
                 className="flex gap-2 text-red-500 border px-3 py-1 rounded-lg"
               >
-                <StopCircle size={14} /> Stop
+                <StopCircle size={14} /> {t("webcam.stop")}
               </button>
             </div>
 
