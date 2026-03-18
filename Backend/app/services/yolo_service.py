@@ -5,6 +5,8 @@ import tempfile
 import subprocess
 import os
 from ultralytics import YOLO
+from PIL import Image
+import io
 from app.config import Config
 
 # Load YOLO model once
@@ -30,17 +32,43 @@ def detect_image(img_bytes):
     return detections
 
 
+MAX_SIZE = 960
+JPEG_QUALITY = 55
+
+def preprocess_image(img_bytes):
+    """Resize and compress image to match training conditions"""
+    img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+
+    # Resize while keeping aspect ratio
+    img.thumbnail((MAX_SIZE, MAX_SIZE))
+
+    # Save to buffer with compression
+    buffer = io.BytesIO()
+    img.save(buffer, format="JPEG", quality=JPEG_QUALITY)
+    buffer.seek(0)
+
+    return buffer.read()
+
+
 def process_images(files):
     """Process multiple uploaded images"""
     response = []
+
     for idx, file in enumerate(files):
-        img_bytes = file.read()
-        detections = detect_image(img_bytes)
+        original_bytes = file.read()
+
+        # 🔥 Preprocess before detection
+        processed_bytes = preprocess_image(original_bytes)
+
+        # Run detection on optimized image
+        detections = detect_image(processed_bytes)
+
         response.append({
             "id": idx,
             "filename": file.filename,
-            "results": detections  # match frontend field name
+            "results": detections
         })
+
     return response
 
 
