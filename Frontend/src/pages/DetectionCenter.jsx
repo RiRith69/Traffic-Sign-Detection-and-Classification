@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion"; // Add framer-motion
+import { motion } from "framer-motion";
 import ImageUpload from "../components/ImageUpload";
 import VideoUpload from "../components/VideoUpload";
 import WebcameCapture from "../components/WebcameCapture";
@@ -11,12 +11,18 @@ function DetectionCenter() {
   const [mode, setMode] = useState("image");
   const [videoOption, setVideoOption] = useState(null);
 
+  // Constants for the yellow frame to 
+  const tapEffect = {
+    outline: "4px solid #eab308",
+    outlineOffset: "-4px"
+  };
+
   return (
     <div className="pt-30 text-black w-screen bg-neutral-100 pb-5 sm:pb-10 ">
       <div className="px-4 sm:px-10 lg:px-20 text-left">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }} 
-          animate={{ opacity: 1, y: 0 }} 
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-3xl sm:text-4xl lg:text-7xl font-bold mb-4"
         >
@@ -37,12 +43,13 @@ function DetectionCenter() {
           {/* Upload Image Card */}
           <motion.div
             whileHover={{ scale: 1.03, y: -3 }}
+            whileTap={tapEffect}
             transition={{ type: "spring", stiffness: 300 }}
             onClick={() => {
               setMode("image");
               setVideoOption(null);
             }}
-            className="shadow-xl rounded-xl p-6 sm:p-10 bg-white text-left cursor-pointer"
+            className={`shadow-xl rounded-xl p-6 sm:p-10 bg-white text-left cursor-pointer outline-none transition-shadow ${mode === 'image' ? 'ring-2 ring-yellow-500' : ''}`}
           >
             <div className="text-2xl sm:text-3xl font-bold mb-2">
               Upload Image
@@ -55,12 +62,13 @@ function DetectionCenter() {
           {/* Video Card */}
           <motion.div
             whileHover={{ scale: 1.03, y: -3 }}
+            whileTap={tapEffect}
             transition={{ type: "spring", stiffness: 300 }}
             onClick={() => {
               setMode("video");
               setVideoOption("upload");
             }}
-            className="shadow-xl rounded-xl p-6 sm:p-10 bg-white text-left cursor-pointer"
+            className={`shadow-xl rounded-xl p-6 sm:p-10 bg-white text-left cursor-pointer outline-none transition-shadow ${mode === 'video' ? 'ring-2 ring-yellow-500' : ''}`}
           >
             <div className="text-2xl sm:text-3xl font-bold mb-2">Video</div>
             <div className="text-sm sm:text-base">
@@ -68,7 +76,7 @@ function DetectionCenter() {
             </div>
           </motion.div>
 
-          {/* Video Options / Image Upload */}
+          {/* Video Options / Image Upload Container */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,26 +85,38 @@ function DetectionCenter() {
           >
             {mode === "video" && (
               <div className="flex gap-3 mb-10">
+                {/* Upload Video Sub-Option */}
                 <motion.div
-                  whileHover={{ scale: 1.03, y: -3 }}
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={tapEffect}
+                  animate={{
+                    outline: videoOption === "upload" ? "4px solid #eab308" : "4px solid transparent",
+                    outlineOffset: "-4px"
+                  }}
                   transition={{ type: "spring", stiffness: 300 }}
                   onClick={() => setVideoOption("upload")}
-                  className="shadow-[0_4px_10px_rgba(0,0,0,0.3)] rounded-xl p-6 sm:p-10 bg-white text-left w-1/2 flex flex-col gap-1 cursor-pointer"
+                  className="shadow-[0_4px_10px_rgba(0,0,0,0.1)] rounded-xl p-6 sm:p-10 bg-white text-left w-1/2 flex flex-col gap-1 cursor-pointer outline-none"
                 >
                   <img src={upload} alt="upload" className="w-8 h-8" />
                   <div className="text-2xl font-bold">Upload Video File</div>
-                  <div>Process pre-recorded video files</div>
+                  <div className="text-sm opacity-70">Process pre-recorded video files</div>
                 </motion.div>
 
+                {/* Webcam Sub-Option */}
                 <motion.div
-                  whileHover={{ scale: 1.03, y: -3 }}
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={tapEffect}
+                  animate={{
+                    outline: videoOption === "realtime" ? "4px solid #eab308" : "4px solid transparent",
+                    outlineOffset: "-4px"
+                  }}
                   transition={{ type: "spring", stiffness: 300 }}
                   onClick={() => setVideoOption("realtime")}
-                  className="shadow-[0_4px_10px_rgba(0,0,0,0.3)] rounded-xl p-6 sm:p-10 bg-white text-left w-1/2 flex flex-col gap-1 cursor-pointer"
+                  className="shadow-[0_4px_10px_rgba(0,0,0,0.1)] rounded-xl p-6 sm:p-10 bg-white text-left w-1/2 flex flex-col gap-1 cursor-pointer outline-none"
                 >
                   <img src={webcam} alt="webcam" className="w-8 h-8" />
                   <div className="text-2xl font-bold">Webcam Live</div>
-                  <div>Connect to real-time video stream</div>
+                  <div className="text-sm opacity-70">Connect to real-time video stream</div>
                 </motion.div>
               </div>
             )}

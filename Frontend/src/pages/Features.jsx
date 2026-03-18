@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
 function Features() {
-
   const { t } = useTranslation();
 
   // get translated data
@@ -25,12 +24,10 @@ function Features() {
         transition={{ duration: 0.5 }}
       >
         <div className="text-7xl font-bold text-gray-900">
-
           {t("featureContent.headerTitle")}
         </div>
 
         <p className="mt-6 text-gray-500 max-w-3xl mx-auto">
-
           {t("featureContent.headerDesc")}
         </p>
       </motion.div>
@@ -43,7 +40,6 @@ function Features() {
         transition={{ duration: 0.5, delay: 0.3 }}
       >
         <h2 className="text-4xl font-semibold text-center mb-10 text-gray-900">
-
           {t("featureContent.specTitle", "Technical Specifications")}
         </h2>
 
@@ -51,8 +47,13 @@ function Features() {
           {technicalSpecifications.map((item, index) => (
             <motion.div
               key={index}
-              className="bg-white rounded-xl shadow-sm py-6 px-4 text-center cursor-pointer"
+              className="bg-white rounded-xl shadow-sm py-6 px-4 text-center cursor-pointer outline-none"
               whileHover={{ scale: 1.03, y: -3 }}
+              // whileTap creates the yellow frame effect on click/tap
+              whileTap={{
+                outline: "4px solid #eab308",
+                outlineOffset: "-4px"
+              }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="text-sm text-gray-500">{item.label}</div>
@@ -75,12 +76,16 @@ function Features() {
           {featuresData.map((item, index) => (
             <motion.div
               key={item.id}
-              className="flex flex-col items-start bg-white p-5 rounded-lg gap-3 shadow cursor-pointer"
+              className="flex flex-col items-start bg-white p-5 rounded-lg gap-3 shadow cursor-pointer outline-none"
               whileHover={{ scale: 1.03, y: -3 }}
+              // whileTap creates the yellow frame effect on click/tap
+              whileTap={{
+                outline: "4px solid #eab308",
+                outlineOffset: "-4px"
+              }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
-
                 <img src={featureIcons[index]?.icon} alt={item.title} className="w-6 h-6" />
               </div>
 
