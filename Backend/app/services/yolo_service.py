@@ -10,24 +10,41 @@ from PIL import Image, ImageOps
 import io
 from app.config import Config
 
+# =========================
+# LOAD YOLO MODEL
+# =========================
 model = YOLO(Config.MODEL_PATH)
 
 MAX_SIZE = 960
 JPEG_QUALITY = 55
+CONF_THRESHOLD = 0.5
 
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+STATIC_DIR = os.path.abspath(os.path.join(BASE_DIR, "..", "static"))
+TEMP_VIDEO_DIR = STATIC_DIR
 
+os.makedirs(TEMP_VIDEO_DIR, exist_ok=True)
+
+print("Saving videos to:", TEMP_VIDEO_DIR)
+
+# Load model
+model = YOLO(Config.MODEL_PATH)
 # =========================
 # PREPROCESS IMAGE
 # =========================
 def preprocess_image(img_bytes):
+    """
+    Fix orientation + resize + compress image
+    """
+
     img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
 
-    # Fix EXIF rotation
+    # Fix EXIF rotation (important for phone uploads)
     img = ImageOps.exif_transpose(img)
 
     original_w, original_h = img.size
 
-    # Resize
+    # Resize (keep aspect ratio)
     img.thumbnail((MAX_SIZE, MAX_SIZE))
     resized_w, resized_h = img.size
 
@@ -39,10 +56,24 @@ def preprocess_image(img_bytes):
 
 
 # =========================
-# RUN YOLO
+# DETECT SINGLE IMAGE
 # =========================
-def run_detection(img):
-    results = model(img)
+def detect_image(img_bytes, original_size, resized_size):
+    """
+    Detect YOLO objects and scale bboxes back to original image size
+    """
+    orig_w, orig_h = original_size
+    resized_w, resized_h = resized_size
+
+    scale_x = orig_w / resized_w
+    scale_y = orig_h / resized_h
+
+    file_bytes = np.frombuffer(img_bytes, np.uint8)
+    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+
+    # 🔥 Force YOLO to use 960
+    results = model(img, imgsz=960)
+
     detections = []
 
     for r in results:
@@ -50,6 +81,12 @@ def run_detection(img):
             x1, y1, x2, y2 = box.xyxy[0].tolist()
             conf = float(box.conf)
             cls = int(box.cls)
+
+            # Scale to original image size
+            x1 *= scale_x
+            x2 *= scale_x
+            y1 *= scale_y
+            y2 *= scale_y
 
             detections.append({
                 "id": cls,
@@ -61,93 +98,49 @@ def run_detection(img):
 
 
 # =========================
-# SCALE BBOX
-# =========================
-def scale_bbox(detections, original_size, resized_size):
-    orig_w, orig_h = original_size
-    resized_w, resized_h = resized_size
-
-    scale_x = orig_w / resized_w
-    scale_y = orig_h / resized_h
-
-    scaled = []
-
-    for d in detections:
-        x1, y1, x2, y2 = d["bbox"]
-
-        scaled.append({
-            "id": d["id"],
-            "confidence": d["confidence"],
-            "bbox": [
-                x1 * scale_x,
-                y1 * scale_y,
-                x2 * scale_x,
-                y2 * scale_y
-            ]
-        })
-
-    return scaled
-
-
-# =========================
-# FIX MIRROR BBOX BACK
-# =========================
-def unmirror_bbox(detections, width):
-    fixed = []
-
-    for d in detections:
-        x1, y1, x2, y2 = d["bbox"]
-
-        x1_new = width - x2
-        x2_new = width - x1
-
-        fixed.append({
-            "id": d["id"],
-            "confidence": d["confidence"],
-            "bbox": [x1_new, y1, x2_new, y2]
-        })
-
-    return fixed
-
-
-# =========================
-# MAIN DETECTION (AUTO MIRROR)
+# AUTO-MIRROR DETECTION
 # =========================
 def detect_image_auto(img_bytes, original_size, resized_size):
-    file_bytes = np.frombuffer(img_bytes, np.uint8)
-    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+    """
+    Detects image, auto flips if mirrored to maximize confidence
+    """
 
-    # --- NORMAL DETECTION ---
-    normal_det = run_detection(img)
-
-    # --- MIRRORED DETECTION ---
-    flipped_img = cv2.flip(img, 1)
-    flipped_det = run_detection(flipped_img)
-
-    # 👉 Choose better result
+    # --- Normal detection
+    normal_det = detect_image(img_bytes, original_size, resized_size)
     normal_score = sum(d["confidence"] for d in normal_det)
+
+    # --- Flipped detection
+    np_img = cv2.imdecode(np.frombuffer(img_bytes, np.uint8), cv2.IMREAD_COLOR)
+    flipped_img = cv2.flip(np_img, 1)
+    _, buf = cv2.imencode('.jpg', flipped_img)
+    flipped_bytes = buf.tobytes()
+
+    flipped_det = detect_image(flipped_bytes, original_size, resized_size)
     flipped_score = sum(d["confidence"] for d in flipped_det)
 
+    # --- Choose the better one
     if flipped_score > normal_score:
-        # 🔥 Use flipped result → but convert back
-        scaled = scale_bbox(flipped_det, original_size, resized_size)
-        final = unmirror_bbox(scaled, original_size[0])
+        # Image is likely mirrored → fix bboxes
+        w, _ = original_size
+        for d in flipped_det:
+            x1, y1, x2, y2 = d["bbox"]
+            d["bbox"] = [w - x2, y1, w - x1, y2]
+        return flipped_det
     else:
-        # 🔥 Use normal result
-        final = scale_bbox(normal_det, original_size, resized_size)
-
-    return final
+        return normal_det
 
 
 # =========================
-# PROCESS IMAGES
+# PROCESS MULTIPLE IMAGES
 # =========================
 def process_images(files):
+    """
+    Process uploaded images and auto-detect mirrored images
+    """
     response = []
 
     for idx, file in enumerate(files):
         original_bytes = file.read()
-
         processed_bytes, original_size, resized_size = preprocess_image(original_bytes)
 
         detections = detect_image_auto(
@@ -166,29 +159,70 @@ def process_images(files):
 
 
 # =========================
-# VIDEO (OPTIONAL SIMPLE VERSION)
+# VIDEO DETECTION HELPERS
 # =========================
-def detect_video(video_bytes, frame_interval=5):
+def get_video_rotation(video_path):
+    """Get rotation angle from video metadata using ffprobe"""
+    try:
+        result = subprocess.run([
+            "ffprobe", "-v", "quiet",
+            "-print_format", "json",
+            "-show_streams", video_path
+        ], capture_output=True, text=True)
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".tmp") as tmp_video:
+        data = result.stdout
+        if not data:
+            return 0
+        import json
+        data = json.loads(data)
+        for stream in data.get('streams', []):
+            rotation = int(stream.get('tags', {}).get('rotate', 0))
+            if rotation:
+                return rotation
+    except:
+        pass
+    return 0
+
+
+def fix_frame_rotation(frame, rotation):
+    if rotation == 90:
+        return cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+    elif rotation == 180:
+        return cv2.rotate(frame, cv2.ROTATE_180)
+    elif rotation == 270:
+        return cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    return frame
+
+
+# =========================
+# VIDEO DETECTION
+# =========================
+def detect_video(video_bytes, frame_interval=2):
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as tmp_video:
         tmp_video.write(video_bytes)
         temp_path = tmp_video.name
 
     cap = cv2.VideoCapture(temp_path)
-    mp4_path = None
-
     if not cap.isOpened():
-        mp4_path = temp_path + ".mp4"
-        subprocess.run([
-            "ffmpeg", "-y", "-i", temp_path,
-            "-vcodec", "h264", "-acodec", "aac", mp4_path
-        ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        raise ValueError("Cannot open video")
 
-        cap.release()
-        cap = cv2.VideoCapture(mp4_path)
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    results_list = []
+    filename = f"video_{next(tempfile._get_candidate_names())}.mp4"
+    output_path = os.path.join(TEMP_VIDEO_DIR, filename)
+
+    out = cv2.VideoWriter(
+        output_path,
+        cv2.VideoWriter_fourcc(*"mp4v"),
+        fps,
+        (width, height)
+    )
+
     frame_id = 0
+    detections = []
 
     while True:
         ret, frame = cap.read()
@@ -196,19 +230,38 @@ def detect_video(video_bytes, frame_interval=5):
             break
 
         if frame_id % frame_interval == 0:
-            detections = run_detection(frame)
+            results = model(frame)
 
-            results_list.append({
+            frame_dets = []
+            for r in results:
+                for box in r.boxes:
+                    conf = float(box.conf[0])
+                    if conf < CONF_THRESHOLD:
+                        continue
+
+                    cls = int(box.cls[0])
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
+
+                    frame_dets.append({
+                        "id": cls,
+                        "confidence": conf,
+                        "bbox": [x1, y1, x2, y2]
+                    })
+
+            detections.append({
                 "frame_id": frame_id,
-                "results": detections
+                "results": frame_dets
             })
 
+        out.write(frame)
         frame_id += 1
 
     cap.release()
+    out.release()
     os.remove(temp_path)
 
-    if mp4_path and os.path.exists(mp4_path):
-        os.remove(mp4_path)
+    video_url = f"http://127.0.0.1:5000/static/{filename}"  
 
-    return results_list
+    return detections, video_url

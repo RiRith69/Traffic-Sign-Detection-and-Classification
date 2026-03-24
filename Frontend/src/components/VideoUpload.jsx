@@ -21,28 +21,29 @@ function VideoUpload() {
   const { t } = useTranslation();
 
   const fileInput = useRef(null);
+  const videoPlayerRef = useRef(null);
+
   const [status, setStatus] = useState("idle");
   const [progress, setProgress] = useState(0);
-  const [skipRate, setSkipRate] = useState(t("video.skip.frame1"));
+  const [skipRate, setSkipRate] = useState(1); // default 1 frame interval
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const [detections, setDetections] = useState([]);
+  const [processedVideoUrl, setProcessedVideoUrl] = useState("");
 
-  const handleClick = () => {
-    fileInput.current.click();
-  };
+  const handleClick = () => fileInput.current.click();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     setVideoFile(file);
+    setProcessedVideoUrl("");
     startUpload(file);
   };
 
   const startUpload = (file) => {
     setStatus("uploading");
     let val = 0;
-
     const interval = setInterval(() => {
       val += 5;
       setProgress(val);
@@ -55,13 +56,14 @@ function VideoUpload() {
 
   const startProcessing = async () => {
     if (!videoFile) return;
-
     setStatus("processing");
     setProgress(0);
     setDetections([]);
+    setProcessedVideoUrl("");
 
     const formData = new FormData();
     formData.append("video", videoFile);
+    formData.append("frame_interval", skipRate);
 
     try {
       const interval = setInterval(() => {
@@ -79,7 +81,12 @@ function VideoUpload() {
 
       clearInterval(interval);
       setProgress(100);
-      setDetections(res.data.results || []);
+
+      const { results, video_url } = res.data;
+      setDetections(results || []);
+
+      setProcessedVideoUrl(video_url);
+
       setStatus("completed");
     } catch (err) {
       console.error(err);
@@ -96,11 +103,9 @@ function VideoUpload() {
     }
 
     const rows = [["Frame ID", "Time (s)", "Sign Name", "Confidence (%)"]];
-
     detections.forEach((frame) => {
       frame.results.forEach((det) => {
         const signName = t(`signs.${det.id}.name`, `Unknown (${det.id})`);
-
         rows.push([
           frame.frame_id,
           (frame.frame_id / 30).toFixed(2),
@@ -123,6 +128,7 @@ function VideoUpload() {
 
   return (
     <div className="w-full space-y-6">
+      {/* Upload area */}
       {status === "idle" && (
         <div
           onClick={handleClick}
@@ -150,6 +156,7 @@ function VideoUpload() {
         </div>
       )}
 
+      {/* Upload/progress card */}
       {status !== "idle" && (
         <div className="w-full border-2 border-dashed border-neutral-300 rounded-xl p-6">
           <div className="flex justify-between items-center mb-4">
@@ -177,6 +184,7 @@ function VideoUpload() {
                 setProgress(0);
                 setVideoFile(null);
                 setDetections([]);
+                setProcessedVideoUrl("");
               }}
               className="p-2 hover:bg-neutral-100 rounded-full"
             >
@@ -186,7 +194,11 @@ function VideoUpload() {
 
           <div className="w-full bg-neutral-100 h-3 rounded-full overflow-hidden">
             <div
-              className={`h-full transition-all duration-300 ${status === "ready" || status === "completed" ? "bg-emerald-500" : "bg-yellow-500"}`}
+              className={`h-full transition-all duration-300 ${
+                status === "ready" || status === "completed"
+                  ? "bg-emerald-500"
+                  : "bg-yellow-500"
+              }`}
               style={{
                 width: `${status === "ready" || status === "completed" ? 100 : progress}%`,
               }}
@@ -195,45 +207,42 @@ function VideoUpload() {
         </div>
       )}
 
+      {/* Video processing controls */}
       {(status === "ready" ||
         status === "processing" ||
         status === "completed") && (
-        <div className="w-full bg-white border border-neutral-200 rounded-xl p-8 shadow-sm">
-          {status !== "completed" ? (
-            <div className="space-y-6">
-              <div className="space-y-2">
+        <div className="w-full bg-white border border-neutral-200 rounded-xl p-8 shadow-sm space-y-6">
+          {/* Frame skip and process button */}
+          {status !== "completed" && (
+            <div className="space-y-4">
+              <div>
                 <label className="font-bold text-neutral-800">
                   {t("video.frameSkip")}
                 </label>
-
                 <div className="relative">
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className="w-full flex justify-between items-center p-3 border border-neutral-300 rounded-lg bg-white"
                   >
-                    {skipRate}
+                    {skipRate} {t("video.frames")}
                     <ChevronDown
                       className={`transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
                     />
                   </button>
-
                   {isDropdownOpen && (
                     <div className="absolute w-full mt-1 border border-neutral-200 bg-white rounded-lg shadow-lg z-10 overflow-hidden">
-                      {[
-                        t("video.skip.frame1"),
-                        t("video.skip.frame3"),
-                        t("video.skip.frame5"),
-                        t("video.skip.frame10"),
-                      ].map((option) => (
+                      {[1, 2, 5, 10].map((rate) => (
                         <div
-                          key={option}
+                          key={rate}
                           onClick={() => {
-                            setSkipRate(option);
+                            setSkipRate(rate);
                             setIsDropdownOpen(false);
                           }}
-                          className={`p-3 cursor-pointer hover:bg-yellow-500 hover:text-white ${skipRate === option ? "bg-yellow-500 text-white" : ""}`}
+                          className={`p-3 cursor-pointer hover:bg-yellow-500 hover:text-white ${
+                            skipRate === rate ? "bg-yellow-500 text-white" : ""
+                          }`}
                         >
-                          {option}
+                          {rate} {t("video.frames")}
                         </div>
                       ))}
                     </div>
@@ -251,27 +260,39 @@ function VideoUpload() {
                   : t("video.start")}
               </button>
             </div>
-          ) : (
+          )}
+
+          {/* Processed video & detections */}
+          {status === "completed" && (
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <h3 className="text-xl font-bold">
-                  {t("video.results")} ({detections.length} {t("video.frames")})
-                </h3>
+              <h3 className="text-xl font-bold">{t("video.results")}</h3>
 
-                <button
-                  onClick={exportCSV}
-                  className="flex items-center gap-2 px-4 py-2 border border-neutral-300 rounded-lg text-sm font-medium hover:bg-neutral-50"
+              {/* Video playback */}
+              {processedVideoUrl && (
+                <video
+                  key={processedVideoUrl}
+                  controls
+                  preload="auto"
+                  className="w-full rounded-lg border"
                 >
-                  <Download className="w-4 h-4" /> {t("video.export")}
-                </button>
-              </div>
+                  <source src={processedVideoUrl} type="video/mp4" />
+                </video>
+              )}
 
+              {/* Export CSV */}
+              <button
+                onClick={exportCSV}
+                className="flex items-center gap-2 px-4 py-2 border border-neutral-300 rounded-lg text-sm font-medium hover:bg-neutral-50"
+              >
+                <Download className="w-4 h-4" /> {t("video.export")}
+              </button>
+
+              {/* Detection list */}
               <div className="space-y-3 max-h-96 overflow-y-auto">
                 {Array.isArray(detections) &&
-                  detections.map((item, idx) => {
+                  detections.map((item) => {
                     const det = item.results?.[0];
                     if (!det) return null;
-
                     const signInfo = signMap[det.id] || { img: null };
                     const signName = t(
                       `signs.${det.id}.name`,
@@ -280,7 +301,7 @@ function VideoUpload() {
 
                     return (
                       <div
-                        key={idx}
+                        key={item.frame_id}
                         className="flex justify-between items-center p-4 bg-neutral-50 rounded-xl"
                       >
                         <div className="flex items-center gap-3">
@@ -291,20 +312,16 @@ function VideoUpload() {
                               className="w-12 h-12 object-contain rounded"
                             />
                           )}
-
                           <div>
                             <p className="font-bold text-neutral-800">
                               {t("video.frame")} {item.frame_id}
                             </p>
-
                             <p className="text-xs text-neutral-400">
                               {(item.frame_id / 30).toFixed(2)}s
                             </p>
-
                             <p className="font-medium mt-1">{signName}</p>
                           </div>
                         </div>
-
                         <div className="bg-yellow-100 px-3 py-1 rounded text-sm font-bold text-yellow-700">
                           {(det.confidence * 100).toFixed(1)}%
                         </div>
