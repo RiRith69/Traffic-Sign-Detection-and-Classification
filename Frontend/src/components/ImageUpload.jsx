@@ -25,7 +25,7 @@ function ImageUpload() {
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files).filter((file) =>
-      file.type.startsWith("image/")
+      file.type.startsWith("image/"),
     );
 
     if (files.length === 0) return;
@@ -65,12 +65,12 @@ function ImageUpload() {
 
         const response = await axios.post(
           "http://localhost:5000/api/detect/images",
-          formData
+          formData,
         );
 
         const detectedResults =
           response.data.results.find(
-            (r) => r.filename === updatedImages[i].name
+            (r) => r.filename === updatedImages[i].name,
           )?.results || [];
 
         updatedImages[i].result = detectedResults.map((d) => ({
@@ -119,18 +119,18 @@ function ImageUpload() {
         currentImg.result.forEach((sign) => {
           const [x1, y1, x2, y2] = sign.bbox.map((v) => v * scale);
 
-          ctx.strokeStyle = "#f3cc4c";
+          ctx.strokeStyle = "#ef4444"; // Tailwind red-500
           ctx.lineWidth = 3;
 
           ctx.strokeRect(x1, y1, x2 - x1, y2 - y1);
 
-          ctx.fillStyle = "#f3cc4c";
+          ctx.fillStyle = "#ef4444"; // text color
           ctx.font = "bold 14px sans-serif";
 
           ctx.fillText(
             `${t(`signs.${sign.id}.name`, sign.id)} ${(sign.confidence * 100).toFixed(1)}%`,
             x1,
-            y1 > 20 ? y1 - 8 : y1 + 20
+            y1 > 20 ? y1 - 8 : y1 + 20,
           );
         });
       }
