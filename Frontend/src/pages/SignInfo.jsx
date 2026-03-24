@@ -29,12 +29,8 @@ export default function SignInfo() {
   });
 
   const uniqueTypes = Array.from(
-    new Set(signInforData.map((item) => item.type.key)),
+    new Set(signInforData.map((item) => item.type.key))
   );
-
-  const getCount = (typeKey) => {
-    return signInforData.filter((item) => item.type.key === typeKey).length;
-  };
 
   return (
     <div className="text-black w-screen pt-40 bg-zinc-50 min-h-screen">
@@ -91,6 +87,7 @@ export default function SignInfo() {
                     setShowDropdown(false);
                   }}
                   className="flex gap-3 items-start px-3 py-2 cursor-pointer hover:bg-gray-100"
+                  whileTap={{ scale: 0.97 }}
                 >
                   <img
                     src={item.img}
@@ -105,7 +102,9 @@ export default function SignInfo() {
                       {t(item.descriptionKey)}
                     </p>
 
-                    <p className="text-xs text-blue-500">{t(item.type.key)}</p>
+                    <p className="text-xs text-blue-500">
+                      {t(item.type.key)}
+                    </p>
                   </div>
                 </motion.div>
               ))
@@ -119,23 +118,33 @@ export default function SignInfo() {
       </div>
 
       {/* Filter Buttons */}
-      <div className="px-5 flex gap-1.5 flex-wrap mt-4">
+      <div className="px-5 flex gap-2 flex-wrap mt-4">
+        {/* ALL */}
         <motion.div
-          className={`flex flex-row bg-white rounded py-2 px-2 items-center gap-1 cursor-pointer ${
-            filterType === "" ? "bg-blue-100" : ""
-          }`}
+          whileTap={{ scale: 0.95 }}
+          className={`flex flex-row rounded py-2 px-3 items-center gap-1 cursor-pointer transition
+            ${
+              filterType === ""
+                ? "bg-yellow-100 text-yellow-700"
+                : "bg-white hover:bg-gray-100"
+            }`}
           onClick={() => setFilterType("")}
         >
           <img src={Filtering} alt="Filtering" className="w-3 h-3" />
           <div>{t("signPage.all")}</div>
         </motion.div>
 
+        {/* TYPES */}
         {uniqueTypes.map((type, index) => (
           <motion.div
             key={index}
-            className={`flex flex-row bg-white rounded py-2 px-2 items-center gap-1 cursor-pointer ${
-              filterType === type ? "bg-blue-100" : ""
-            }`}
+            whileTap={{ scale: 0.95 }}
+            className={`flex flex-row rounded py-2 px-3 items-center gap-1 cursor-pointer transition
+              ${
+                filterType === type
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-white hover:bg-gray-100"
+              }`}
             onClick={() => setFilterType(type)}
           >
             <img src={Filtering} alt="Filtering" className="w-3 h-3" />
@@ -151,7 +160,9 @@ export default function SignInfo() {
             key={item.id}
             className="bg-white rounded-xl shadow-sm py-6 px-4 text-center"
           >
-            <div className="text-sm text-gray-500">{t(item.labelKey)}</div>
+            <div className="text-sm text-gray-500">
+              {t(item.labelKey)}
+            </div>
 
             <div className="mt-2 font-semibold text-2xl text-yellow-500">
               {item.id === 1 ? signInforData.length : item.value}
@@ -177,6 +188,7 @@ export default function SignInfo() {
             <motion.div
               key={item.id}
               className="bg-white rounded-xl shadow-md p-5 relative flex flex-col gap-4 py-10"
+              whileHover={{ scale: 1.03 }}
             >
               <span className="absolute top-4 right-4 bg-yellow-100 text-yellow-600 text-xs font-semibold px-2 py-1 rounded">
                 {t(item.type.key)}
@@ -188,9 +200,13 @@ export default function SignInfo() {
                 className="h-16 w-16 object-contain"
               />
 
-              <h2 className="font-bold text-xl text-left">{t(item.nameKey)}</h2>
+              <h2 className="font-bold text-xl text-left">
+                {t(item.nameKey)}
+              </h2>
 
-              <p className="text-gray-600 text-sm">{t(item.descriptionKey)}</p>
+              <p className="text-gray-600 text-sm">
+                {t(item.descriptionKey)}
+              </p>
             </motion.div>
           ))
         ) : (
